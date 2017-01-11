@@ -1,9 +1,9 @@
 # clean-code-javascript
 
 ## Índice
-  1. [Introdução](#introduction)
-  2. [Variáveis](#variables)
-  3. [Funções](#functions)
+  1. [Introdução](#introdução)
+  2. [Variáveis](#variáveis)
+  3. [Funções](#funções)
   4. [Objetos e Estruturas de Dados](#objects-and-data-structures)
   5. [Classes](#classes)
   6. [Testes](#testing)
@@ -176,31 +176,22 @@ function createMicrobrewery(breweryName = 'Hipster Brew Co.') {
 ```
 **[⬆ voltar ao topo](#table-of-contents)**
 
-## **Functions**
-### Function arguments (2 or fewer ideally)
-Limiting the amount of function parameters is incredibly important because it
-makes testing your function easier. Having more than three leads to a
-combinatorial explosion where you have to test tons of different cases with
-each separate argument.
+## **Funções**
+### Argumentos de funções (idealmente 2 ou menos)
+Limitar a quantidade de parâmetros de uma função é incrivelmente importante porque torna mais fácil testá-la. Ter mais que três leva a uma explosão combinatória onde você tem que testar muitos casos diferentes com cada argumento separadamente.
 
-Zero arguments is the ideal case. One or two arguments is ok, and three should
-be avoided. Anything more than that should be consolidated. Usually, if you have
-more than two arguments then your function is trying to do too much. In cases
-where it's not, most of the time a higher-level object will suffice as an
-argument.
+Nenhum argumento é o caso ideal. Um ou dois argumentos é bom, e três deve ser evitado. Qualquer coisa a mais que isso deve ser consolidado. Geralmente, se você tem mais que dois argumentos então sua função esta tentando fazer muitas coisas. Nos casos em que não esta, na maioria das vezes um objeto é suficiente como argumento.
 
-Since JavaScript allows us to make objects on the fly, without a lot of class
-boilerplate, you can use an object if you are finding yourself needing a
-lot of arguments.
+Já que JavaScript nos permite criar objetos instantaneamente, sem ter que escrever muita coisa, você pode usar um objeto se você se pegar precisando usar muitos argumentos.
 
-**Bad:**
+**Ruim:**
 ```javascript
 function createMenu(title, body, buttonText, cancellable) {
   // ...
 }
 ```
 
-**Good**:
+**Bom**:
 ```javascript
 const menuConfig = {
   title: 'Foo',
@@ -214,17 +205,13 @@ function createMenu(config) {
 }
 
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#table-of-contents)**
 
 
-### Functions should do one thing
-This is by far the most important rule in software engineering. When functions
-do more than one thing, they are harder to compose, test, and reason about.
-When you can isolate a function to just one action, they can be refactored
-easily and your code will read much cleaner. If you take nothing else away from
-this guide other than this, you'll be ahead of many developers.
+### Funções devem fazer uma coisa
+Essa é de longe a regra mais importante em engenharia de software. Quando funções fazem mais que uma coisa, elas se tornam difíceis de serem compostas, testadas e raciocinadas. Quando você pode isolar uma função para realizar apenas uma ação, elas podem ser refatoradas facilmente e seu código ficará muito mais limpo. Se você não levar mais nada desse guia além disso, você já estará na frente de muitos desenvolvedores.
 
-**Bad:**
+**Ruim:**
 ```javascript
 function emailClients(clients) {
   clients.forEach((client) => {
@@ -236,7 +223,7 @@ function emailClients(clients) {
 }
 ```
 
-**Good**:
+**Bom**:
 ```javascript
 function emailClients(clients) {
   clients
@@ -249,11 +236,11 @@ function isClientActive(client) {
   return clientRecord.isActive();
 }
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#table-of-contents)**
 
-### Function names should say what they do
+### Nomes de funções devem dizer o que elas fazem
 
-**Bad:**
+**Ruim:**
 ```javascript
 function addToDate(date, month) {
   // ...
@@ -261,11 +248,11 @@ function addToDate(date, month) {
 
 const date = new Date();
 
-// It's hard to to tell from the function name what is added
+// É difícil dizer pelo nome da função o que é adicionado
 addToDate(date, 1);
 ```
 
-**Good**:
+**Bom**:
 ```javascript
 function addMonthToDate(month, date) {
   // ...
@@ -274,14 +261,12 @@ function addMonthToDate(month, date) {
 const date = new Date();
 addMonthToDate(1, date);
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#table-of-contents)**
 
-### Functions should only be one level of abstraction
-When you have more than one level of abstraction your function is usually
-doing too much. Splitting up functions leads to reusability and easier
-testing.
+### Funções devem ter apenas um nível de abstração
+Quando você tem mais de um nível de abstração sua função provavelmente esta fazendo coisas demais. Dividir suas funções leva a reutilização e teste mais fáceis.
 
-**Bad:**
+**Ruim:**
 ```javascript
 function parseBetterJSAlternative(code) {
   const REGEXES = [
@@ -307,7 +292,7 @@ function parseBetterJSAlternative(code) {
 }
 ```
 
-**Good**:
+**Bom**:
 ```javascript
 function tokenize(code) {
   const REGEXES = [
@@ -342,18 +327,12 @@ function parseBetterJSAlternative(code) {
   });
 }
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#table-of-contents)**
 
-### Remove duplicate code
-Never ever, ever, under any circumstance, have duplicate code. There's no reason
-for it and it's quite possibly the worst sin you can commit as a professional
-developer. Duplicate code means there's more than one place to alter something
-if you need to change some logic. JavaScript is untyped, so it makes having
-generic functions quite easy. Take advantage of that! Tools like
-[jsinspect](https://github.com/danielstjules/jsinspect) can help you find duplicate
-code eligible for refactoring.
+### Remova código duplicado
+Absolutamente nunca, nunca, em qualquer circunstância, tenha código duplicado. Não existe motivo para fazer isto e é possivelmente o pior pecado que você pode cometer como um desenvolvedor profissional. Código duplicado quer dizer que existe mais de um lugar onde você deverá alterar algo se precisar mudar alguma lógica. JavaScript possui tipagem fraca, então torna-se fácil ter funções genéricas. Aproveite-se disso! Ferramentas como [jsinspect](https://github.com/danielstjules/jsinspect) podem lhe ajudar a encontrar código duplicado elegível para refatoração.
 
-**Bad:**
+**Ruim:**
 ```javascript
 function showDeveloperList(developers) {
   developers.forEach((developer) => {
@@ -386,7 +365,7 @@ function showManagerList(managers) {
 }
 ```
 
-**Good**:
+**Bom**:
 ```javascript
 function showList(employees) {
   employees.forEach((employee) => {
@@ -409,11 +388,11 @@ function showList(employees) {
   });
 }
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#table-of-contents)**
 
-### Set default objects with Object.assign
+### Defina (set) objetos padrões com Object.assign
 
-**Bad:**
+**Ruim:**
 ```javascript
 const menuConfig = {
   title: null,
@@ -433,11 +412,11 @@ function createMenu(config) {
 createMenu(menuConfig);
 ```
 
-**Good**:
+**Bom**:
 ```javascript
 const menuConfig = {
   title: 'Order',
-  // User did not include 'body' key
+  // Usuário não incluiu a chave 'body'
   buttonText: 'Send',
   cancellable: true
 };
@@ -450,19 +429,19 @@ function createMenu(config) {
     cancellable: true
   }, config);
 
-  // config now equals: {title: "Order", body: "Bar", buttonText: "Send", cancellable: true}
+  // configuração agora é: {title: "Order", body: "Bar", buttonText: "Send", cancellable: true}
   // ...
 }
 
 createMenu(menuConfig);
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#table-of-contents)**
 
 
-### Don't use flags as function parameters
-Flags tell your user that this function does more than one thing. Functions should do one thing. Split out your functions if they are following different code paths based on a boolean.
+### Não use flags como parâmetros de funções
+Flags falam para o seu usuário que sua função faz mais de uma coisa. Funções devem fazer apenas uma coisa. Divida suas funções se elas estao seguindo caminhos de código diferentes baseadas em um valor boleano.
 
-**Bad:**
+**Ruim:**
 ```javascript
 function createFile(name, temp) {
   if (temp) {
@@ -473,7 +452,7 @@ function createFile(name, temp) {
 }
 ```
 
-**Good**:
+**Bom**:
 ```javascript
 function createFile(name) {
   fs.create(name);
@@ -483,28 +462,19 @@ function createTempFile(name) {
   createFile(`./temp/${name}`);
 }
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#table-of-contents)**
 
-### Avoid Side Effects
-A function produces a side effect if it does anything other than take a value in
-and return another value or values. A side effect could be writing to a file,
-modifying some global variable, or accidentally wiring all your money to a
-stranger.
+### Evite Efeitos Colaterais
+Uma função produz um efeito colateral se ela faz alguma coisa que não seja receber um valor de entrada e retornar outro(s) valor(es). Um efeito colateral pode ser escrever em um arquivo, modificar uma variável global, ou acidentalmente transferir todo seu dinheiro para um estranho.
 
-Now, you do need to have side effects in a program on occasion. Like the previous
-example, you might need to write to a file. What you want to do is to
-centralize where you are doing this. Don't have several functions and classes
-that write to a particular file. Have one service that does it. One and only one.
+Agora, você precisa de efeitos colaterais ocasionalmente no seu programa. Como no exemplo anterior, você pode precisar escrever em um arquivo. O que você quer fazer é centralizar aonde está fazendo isto. Não tenha diversas funções e classes que escrevam para uma arquivo em particular. Tenha um serviço que faça isso. Um e apenas um.
 
-The main point is to avoid common pitfalls like sharing state between objects
-without any structure, using mutable data types that can be written to by anything,
-and not centralizing where your side effects occur. If you can do this, you will
-be happier than the vast majority of other programmers.
+O ponto principal é evitar armadilhas como compartilhar o estado entre objetos sem nenhuma estrutura, usando tipos de dados mutáveis que podem ser escritos por qualquer coisa, e não centralizando onde seu efeito colateral acontece. Se você conseguir fazer isto, você sera muito mais feliz que a grande maioria dos outros programadores.
 
-**Bad:**
+**Ruim:**
 ```javascript
-// Global variable referenced by following function.
-// If we had another function that used this name, now it'd be an array and it could break it.
+// Variável global referenciada pela função seguinte
+// Se tivéssemos outra função que usa esse nome, então seria um vetor (array) e poderia quebrar seu código
 let name = 'Ryan McDermott';
 
 function splitIntoFirstAndLastName() {
@@ -516,7 +486,7 @@ splitIntoFirstAndLastName();
 console.log(name); // ['Ryan', 'McDermott'];
 ```
 
-**Good**:
+**Bom**:
 ```javascript
 function splitIntoFirstAndLastName(name) {
   return name.split(' ');
@@ -528,20 +498,12 @@ const newName = splitIntoFirstAndLastName(name);
 console.log(name); // 'Ryan McDermott';
 console.log(newName); // ['Ryan', 'McDermott'];
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#table-of-contents)**
 
-### Don't write to global functions
-Polluting globals is a bad practice in JavaScript because you could clash with another
-library and the user of your API would be none-the-wiser until they get an
-exception in production. Let's think about an example: what if you wanted to
-extend JavaScript's native Array method to have a `diff` method that could
-show the difference between two arrays? You could write your new function
-to the `Array.prototype`, but it could clash with another library that tried
-to do the same thing. What if that other library was just using `diff` to find
-the difference between the first and last elements of an array? This is why it
-would be much better to just use ES2015/ES6 classes and simply extend the `Array` global.
+### Não escreva em funções globais
+Poluir globais é uma pratica ruim em JavaScript porque você pode causar conflito com outra biblioteca e o usuário da sua API não faria a menor ideia até que ele tivesse um exceção sendo levantada em produção. Vamos pensar em um exemplo: e se você quisesse estender o método nativo Array do JavaScript para ter um método `diff` que poderia mostrar a diferença entre dois vetores? Você poderia escrever sua nova função em `Array.prototype`, mas poderia colidir com outra biblioteca que tentou fazer a mesma coisa. E se esta outra biblioteca estava apenas usando `diff` para achar a diferença entre o primeiro e último elemento de um vetor? É por isso que seria muito melhor usar as classes padrões do ES2015/ES6 e apenas estender o `Array` global.
 
-**Bad:**
+**Ruim:**
 ```javascript
 Array.prototype.diff = function diff(comparisonArray) {
   const values = [];
@@ -561,7 +523,7 @@ Array.prototype.diff = function diff(comparisonArray) {
 };
 ```
 
-**Good:**
+**Bom:**
 ```javascript
 class SuperArray extends Array {
   constructor(...args) {
@@ -586,7 +548,7 @@ class SuperArray extends Array {
   }
 }
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#table-of-contents)**
 
 ### Favor functional programming over imperative programming
 JavaScript isn't a functional language in the way that Haskell is, but it has
