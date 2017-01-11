@@ -12,83 +12,63 @@
   9. [Formatação](#formatting)
   10. [Comentários](#comments)
 
-## Introduction
-![Humorous image of software quality estimation as a count of how many expletives
-you shout when reading code](http://www.osnews.com/images/comics/wtfm.jpg)
+## Introdução
+![Imagem humorística da estimativa de qualidade do software baseado na contagem de quantos palavrões você gritou enquanto lia o código.](http://www.osnews.com/images/comics/wtfm.jpg)
 
-Software engineering principles, from Robert C. Martin's book
-[*Clean Code*](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882),
-adapted for JavaScript. This is not a style guide. It's a guide to producing
-readable, reusable, and refactorable software in JavaScript.
+Princípios da Engenharia de Software, do livro de Robert C. Martin
+[*Código Limpo*](https://www.amazon.com.br/C%C3%B3digo-Limpo-Habilidades-Pr%C3%A1ticas-Software/dp/8576082675),
+adaptados para JavaScript. Isto não é um guia de estilos. É um guia para se produzir código legível, reutilizável e refatorável em JavaScript.
 
-Not every principle herein has to be strictly followed, and even fewer will be
-universally agreed upon. These are guidelines and nothing more, but they are
-ones codified over many years of collective experience by the authors of
-*Clean Code*.
+Nem todo principio demonstrado deve ser seguido rigorosamente, e ainda menos são os que possuem consenso universal. São orientações e nada mais, entretanto, foram usadas em código durante muitos anos de experiencia coletiva pelos autores de *Código limpo*.
 
-Our craft of software engineering is just a bit over 50 years old, and we are
-still learning a lot. When software architecture is as old as architecture
-itself, maybe then we will have harder rules to follow. For now, let these
-guidelines serve as a touchstone by which to assess the quality of the
-JavaScript code that you and your team produce.
+Nosso oficio de engenharia de software tem pouco mais de 50 anos, e ainda estamos aprendendo muito. Quando a arquitetura de software for tão velha quando a própria arquitetura, talvez então tenhamos regras mais rígidas para seguir. Por enquanto, deixe que estas orientações sirvam como critério para se avaliar a qualidade de código JavaScript que tanto você e o seu time produzirem.
 
-One more thing: knowing these won't immediately make you a better software
-developer, and working with them for many years doesn't mean you won't make
-mistakes. Every piece of code starts as a first draft, like wet clay getting
-shaped into its final form. Finally, we chisel away the imperfections when
-we review it with our peers. Don't beat yourself up for first drafts that need
-improvement. Beat up the code instead!
+Mais uma coisa: aprender isto não irá lhe transformar imediatamente em um desenvolvedor de software melhor, e trabalhar com eles por muitos anos não quer dizer que você não cometerá erros. Toda porcão de código começa com um rascunho, como argila molhada sendo moldada em sua forma final. Finalmente, talhamos as imperfeições quando revisamos com nossos colegas. Não se bata pelos primeiros rascunhos que ainda precisam de melhorias. Ao invés, bata em seu código.
 
-## **Variables**
-### Use meaningful and pronounceable variable names
+## **Variáveis**
+### Use nomes de variáveis que tenham significado e sejam pronunciáveis
 
-**Bad:**
+**Ruim:**
 ```javascript
 const yyyymmdstr = moment().format('YYYY/MM/DD');
 ```
 
-**Good**:
+**Bom**:
 ```javascript
 const yearMonthDay = moment().format('YYYY/MM/DD');
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#table-of-contents)**
 
-### Use the same vocabulary for the same type of variable
+### Use o mesmo vocabulário para o mesmo tipo de variável
 
-**Bad:**
+**Ruim:**
 ```javascript
 getUserInfo();
 getClientData();
 getCustomerRecord();
 ```
 
-**Good**:
+**Bom**:
 ```javascript
 getUser();
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#table-of-contents)**
 
-### Use searchable names
-We will read more code than we will ever write. It's important that the code we
-do write is readable and searchable. By *not* naming variables that end up
-being meaningful for understanding our program, we hurt our readers.
-Make your names searchable. Tools like
-[buddy.js](https://github.com/danielstjules/buddy.js) and
-[ESLint](https://github.com/eslint/eslint/blob/660e0918933e6e7fede26bc675a0763a6b357c94/docs/rules/no-magic-numbers.md)
-can help identify unnamed constants.
+### Use nomes pesquisáveis
+Nós leremos mais código do que jamais seremos capazes de escreveremos. É importante que o código que escrevemos seja legível e pesquisável. *Não* dando nomes em variáveis que sejam significativos para entender nosso programa, machucamos nossos leitores. Torne seus nomes pesquisáveis. Ferramentas como [buddy.js](https://github.com/danielstjules/buddy.js) e [ESLint](https://github.com/eslint/eslint/blob/660e0918933e6e7fede26bc675a0763a6b357c94/docs/rules/no-magic-numbers.md) podem ajudar a identificar constantes sem nome.
 
-**Bad:**
+**Ruim:**
 ```javascript
-// What the heck is 86400 for?
+// Para que diabos serve 86400?
 setTimeout(() => {
   this.blastOff()
 }, 86400);
 
 ```
 
-**Good**:
+**Bom**:
 ```javascript
-// Declare them as capitalized `const` globals.
+// Declare-as como `const` global em letras maiúsculas.
 const SECONDS_IN_A_DAY = 86400;
 
 setTimeout(() => {
@@ -96,29 +76,29 @@ setTimeout(() => {
 }, SECONDS_IN_A_DAY);
 
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#table-of-contents)**
 
-### Use explanatory variables
-**Bad:**
+### Use variáveis explicativas
+**Ruim:**
 ```javascript
 const address = 'One Infinite Loop, Cupertino 95014';
 const cityStateRegex = /^[^,\\]+[,\\\s]+(.+?)\s*(\d{5})?$/;
 saveCityState(address.match(cityStateRegex)[1], address.match(cityStateRegex)[2]);
 ```
 
-**Good**:
+**Bom**:
 ```javascript
 const address = 'One Infinite Loop, Cupertino 95014';
 const cityStateRegex = /^[^,\\]+[,\\\s]+(.+?)\s*(\d{5})?$/;
 const [, city, state] = address.match(cityStateRegex);
 saveCityState(city, state);
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#table-of-contents)**
 
-### Avoid Mental Mapping
-Explicit is better than implicit.
+### Evite Mapeamento Mental
+Explicito é melhor que implícito.
 
-**Bad:**
+**Ruim:**
 ```javascript
 const locations = ['Austin', 'New York', 'San Francisco'];
 locations.forEach((l) => {
@@ -127,12 +107,12 @@ locations.forEach((l) => {
   // ...
   // ...
   // ...
-  // Wait, what is `l` for again?
+  // Espera, para ques serve o `l` mesmo?
   dispatch(l);
 });
 ```
 
-**Good**:
+**Bom**:
 ```javascript
 const locations = ['Austin', 'New York', 'San Francisco'];
 locations.forEach((location) => {
@@ -144,13 +124,12 @@ locations.forEach((location) => {
   dispatch(location);
 });
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#table-of-contents)**
 
-### Don't add unneeded context
-If your class/object name tells you something, don't repeat that in your
-variable name.
+### Não adicione contextos desnecessários
+Se o nome de sua classe/objeto já lhe diz alguma coisa, não as repitas nos nomes de suas variáveis.
 
-**Bad:**
+**Ruim:**
 ```javascript
 const Car = {
   carMake: 'Honda',
@@ -163,7 +142,7 @@ function paintCar(car) {
 }
 ```
 
-**Good**:
+**Bom**:
 ```javascript
 const Car = {
   make: 'Honda',
@@ -175,11 +154,11 @@ function paintCar(car) {
   car.color = 'Red';
 }
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#table-of-contents)**
 
-### Use default arguments instead of short circuiting or conditionals
+### Use argumentos padrões ao invés de curto circuitar ou condicionais
 
-**Bad:**
+**Ruim:**
 ```javascript
 function createMicrobrewery(name) {
   const breweryName = name || 'Hipster Brew Co.';
@@ -188,14 +167,14 @@ function createMicrobrewery(name) {
 
 ```
 
-**Good**:
+**Bom**:
 ```javascript
 function createMicrobrewery(breweryName = 'Hipster Brew Co.') {
   ...
 }
 
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#table-of-contents)**
 
 ## **Functions**
 ### Function arguments (2 or fewer ideally)
