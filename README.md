@@ -1,16 +1,16 @@
 # clean-code-javascript
 
-## Table of Contents
-  1. [Introduction](#introduction)
-  2. [Variables](#variables)
-  3. [Functions](#functions)
-  4. [Objects and Data Structures](#objects-and-data-structures)
+## Índice
+  1. [Introdução](#introduction)
+  2. [Variáveis](#variables)
+  3. [Funções](#functions)
+  4. [Objetos e Estruturas de Dados](#objects-and-data-structures)
   5. [Classes](#classes)
-  6. [Testing](#testing)
-  7. [Concurrency](#concurrency)
-  8. [Error Handling](#error-handling)
-  9. [Formatting](#formatting)
-  10. [Comments](#comments)
+  6. [Testes](#testing)
+  7. [Concorrência](#concurrency)
+  8. [Tratamento de Erros](#error-handling)
+  9. [Formatação](#formatting)
+  10. [Comentários](#comments)
 
 ## Introduction
 ![Humorous image of software quality estimation as a count of how many expletives
