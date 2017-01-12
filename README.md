@@ -37,7 +37,7 @@ const yyyymmdstr = moment().format('YYYY/MM/DD');
 ```javascript
 const yearMonthDay = moment().format('YYYY/MM/DD');
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#índice)**
 
 ### Use o mesmo vocabulário para o mesmo tipo de variável
 
@@ -550,12 +550,10 @@ class SuperArray extends Array {
 ```
 **[⬆ voltar ao topo](#table-of-contents)**
 
-### Favor functional programming over imperative programming
-JavaScript isn't a functional language in the way that Haskell is, but it has
-a functional flavor to it. Functional languages are cleaner and easier to test.
-Favor this style of programming when you can.
+### Favoreça programação funcional sobre programação imperativa
+JavaScript não é uma linguagem funcional da mesma forma que Haskell é, mas tem um toque de funcional em si. Linguagens funcionais são mais limpas e fáceis de se testar. Favoreça esse tipo de programação quando puder.
 
-**Bad:**
+**Ruim:**
 ```javascript
 const programmerOutput = [
   {
@@ -580,7 +578,7 @@ for (let i = 0; i < programmerOutput.length; i++) {
 }
 ```
 
-**Good**:
+**Bom**:
 ```javascript
 const programmerOutput = [
   {
@@ -602,18 +600,18 @@ const totalOutput = programmerOutput
   .map((programmer) => programmer.linesOfCode)
   .reduce((acc, linesOfCode) => acc + linesOfCode, 0);
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ volta ao topo](#table-of-contents)**
 
-### Encapsulate conditionals
+### Encapsule condicionais
 
-**Bad:**
+**Ruim:**
 ```javascript
 if (fsm.state === 'fetching' && isEmpty(listNode)) {
   // ...
 }
 ```
 
-**Good**:
+**Bom**:
 ```javascript
 function shouldShowSpinner(fsm, listNode) {
   return fsm.state === 'fetching' && isEmpty(listNode);
@@ -623,11 +621,11 @@ if (shouldShowSpinner(fsmInstance, listNodeInstance)) {
   // ...
 }
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#table-of-contents)**
 
-### Avoid negative conditionals
+### Evite negações de condicionais
 
-**Bad:**
+**Ruim:**
 ```javascript
 function isDOMNodeNotPresent(node) {
   // ...
@@ -638,7 +636,7 @@ if (!isDOMNodeNotPresent(node)) {
 }
 ```
 
-**Good**:
+**Bom**:
 ```javascript
 function isDOMNodePresent(node) {
   // ...
@@ -648,19 +646,12 @@ if (isDOMNodePresent(node)) {
   // ...
 }
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#table-of-contents)**
 
-### Avoid conditionals
-This seems like an impossible task. Upon first hearing this, most people say,
-"how am I supposed to do anything without an `if` statement?" The answer is that
-you can use polymorphism to achieve the same task in many cases. The second
-question is usually, "well that's great but why would I want to do that?" The
-answer is a previous clean code concept we learned: a function should only do
-one thing. When you have classes and functions that have `if` statements, you
-are telling your user that your function does more than one thing. Remember,
-just do one thing.
+### Evite condicionais
+Esta parece ser uma tarefa impossível. Da primeira vez que as pessoas escutam isso, a maioria diz, “como eu supostamente faria alguma coisa sem usar `if`? ” A resposta é que você pode usar polimorfismo para realizar a mesma tarefa em diversos casos. A segunda questão é geralmente, “bom, isso é ótimo, mas porque eu deveria fazer isso?” A resposta é um conceito de código limpo aprendido previamente: uma função deve fazer apenas uma coisa. Quando você tem classes e funções que tem declarações `if`, você esta dizendo para seu usuário que sua função faz mais de uma coisa. Relembre-se, apenas uma coisa.
 
-**Bad:**
+**Ruim:**
 ```javascript
 class Airplane {
   // ...
@@ -677,7 +668,7 @@ class Airplane {
 }
 ```
 
-**Good**:
+**Bom**:
 ```javascript
 class Airplane {
   // ...
@@ -704,15 +695,12 @@ class Cessna extends Airplane {
   }
 }
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#table-of-contents)**
 
-### Avoid type-checking (part 1)
-JavaScript is untyped, which means your functions can take any type of argument.
-Sometimes you are bitten by this freedom and it becomes tempting to do
-type-checking in your functions. There are many ways to avoid having to do this.
-The first thing to consider is consistent APIs.
+### Evite checagem de tipos (parte 1)
+JavaScript não possui tipos, o que significa que suas funções podem receber qualquer tipo de argumento. Algumas vezes esta liberdade pode te morder, e se torna tentador fazer checagem de tipos em suas funções. Existem muitas formas de evitar ter que fazer isso. A primeira coisa a se considerar são APIs consistentes.
 
-**Bad:**
+**Ruim:**
 ```javascript
 function travelToTexas(vehicle) {
   if (vehicle instanceof Bicycle) {
@@ -723,26 +711,18 @@ function travelToTexas(vehicle) {
 }
 ```
 
-**Good**:
+**Bom**:
 ```javascript
 function travelToTexas(vehicle) {
   vehicle.move(this.currentLocation, new Location('texas'));
 }
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#table-of-contents)**
 
-### Avoid type-checking (part 2)
-If you are working with basic primitive values like strings, integers, and arrays,
-and you can't use polymorphism but you still feel the need to type-check,
-you should consider using TypeScript. It is an excellent alternative to normal
-JavaScript, as it provides you with static typing on top of standard JavaScript
-syntax. The problem with manually type-checking normal JavaScript is that
-doing it well requires so much extra verbiage that the faux "type-safety" you get
-doesn't make up for the lost readability. Keep your JavaScript clean, write
-good tests, and have good code reviews. Otherwise, do all of that but with
-TypeScript (which, like I said, is a great alternative!).
+### Evite checagem de tipos (parte 2)
+Se você estiver trabalhando com valores primitivos básicos como strings, inteiros e vetores, e você não pode usar polimorfismo mas ainda sente a necessidade de checar o tipo, você deveria considerar usar TypeScript. É uma excelente alternativa para o JavaScript normal, já que fornece uma tipagem estática sobre a sintaxe  padrão do JavaScript. O problema com checagem manual em JavaScript é que para se fazer bem feito requer tanta verborragia extra que a falsa “tipagem-segura” que você consegue não compensa pela perca de legibilidade. Mantenha seu JavaScript limpo, escreve bons testes, e tenha boas revisões de código. Ou, de outra forma, faça tudo isso mas com TypeScript (que, como eu falei, é uma ótima alternativa!).
 
-**Bad:**
+**Ruim:**
 ```javascript
 function combine(val1, val2) {
   if (typeof val1 === 'number' && typeof val2 === 'number' ||
@@ -754,45 +734,39 @@ function combine(val1, val2) {
 }
 ```
 
-**Good**:
+**Bom**:
 ```javascript
 function combine(val1, val2) {
   return val1 + val2;
 }
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#table-of-contents)**
 
-### Don't over-optimize
-Modern browsers do a lot of optimization under-the-hood at runtime. A lot of
-times, if you are optimizing then you are just wasting your time. [There are good
-resources](https://github.com/petkaantonov/bluebird/wiki/Optimization-killers)
-for seeing where optimization is lacking. Target those in the meantime, until
-they are fixed if they can be.
+### Não otimize demais
+Navegadores modernos fazem muitas otimizações por debaixo dos panos em tempo de execução. Muitas vezes, se você estiver otimizando esta apenas perdendo o seu tempo. [Existem bons recursos](https://github.com/petkaantonov/bluebird/wiki/Optimization-killers) para se verificar onde falta otimização. Foque nesses por enquanto, até que	eles sejam concertados caso seja possível.
 
-**Bad:**
+**Ruim:**
 ```javascript
 
-// On old browsers, each iteration with uncached `list.length` would be costly
-// because of `list.length` recomputation. In modern browsers, this is optimized.
+// Em navegadores antigos, cada iteração de `list.length` não cacheada seria custosa
+// devido a recomputação de `list.length`. Em navegadores modernos, isto é otimizado.
 for (let i = 0, len = list.length; i < len; i++) {
   // ...
 }
 ```
 
-**Good**:
+**Bom**:
 ```javascript
 for (let i = 0; i < list.length; i++) {
   // ...
 }
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#table-of-contents)**
 
-### Remove dead code
-Dead code is just as bad as duplicate code. There's no reason to keep it in
-your codebase. If it's not being called, get rid of it! It will still be safe
-in your version history if you still need it.
+### Remova código morto
+Código morto é tão ruim quanto código duplicado. Não existe nenhum motivo para deixá-lo em seu código. Se ele não estiver sendo chamado, livre-se dele. Ele ainda estará a salvo no seu histórico de versionamento se ainda precisar dele.
 
-**Bad:**
+**Ruim:**
 ```javascript
 function oldRequestModule(url) {
   // ...
@@ -807,7 +781,7 @@ inventoryTracker('apples', req, 'www.inventory-awesome.io');
 
 ```
 
-**Good**:
+**Bom**:
 ```javascript
 function newRequestModule(url) {
   // ...
@@ -816,7 +790,7 @@ function newRequestModule(url) {
 const req = newRequestModule;
 inventoryTracker('apples', req, 'www.inventory-awesome.io');
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#table-of-contents)**
 
 ## **Objects and Data Structures**
 ### Use getters and setters
