@@ -890,17 +890,10 @@ console.log(`Employee name: ${employee.getName()}`); // Employee name: John Doe
 
 
 ## **Classes**
-### Single Responsibility Principle (SRP)
-As stated in Clean Code, "There should never be more than one reason for a class
-to change". It's tempting to jam-pack a class with a lot of functionality, like
-when you can only take one suitcase on your flight. The issue with this is
-that your class won't be conceptually cohesive and it will give it many reasons
-to change. Minimizing the amount of times you need to change a class is important.
-It's important because if too much functionality is in one class and you modify a piece of it,
-it can be difficult to understand how that will affect other dependent modules in
-your codebase.
+### Principio da Responsabilidade Única (SRP)
+Como dito em Código Limpo, "Nunca deveria haver mais de um motivo para uma classe ter que mudar". É tentador empacotar uma classe em excesso com muitas funcionalidades, como quando você pode levar apenas uma mala em seu voo. O problema com isso é que sua classe não sserá conceitualmente coesa e lhe dará diversos motivos para mudá-la. Minimizar o número de vezes que você precisa mudar uma classe é importante. É importante porque se muitas funcionalidades estão em uma classe e você mudar uma porção dela, pode ser difícil entender como isto afetará outras módulos que dependem dela no seu código.
 
-**Bad:**
+**Ruim:**
 ```javascript
 class UserSettings {
   constructor(user) {
@@ -919,7 +912,7 @@ class UserSettings {
 }
 ```
 
-**Good**:
+**Bom**:
 ```javascript
 class UserAuth {
   constructor(user) {
@@ -945,21 +938,17 @@ class UserSettings {
   }
 }
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#table-of-contents)**
 
-### Open/Closed Principle (OCP)
-As stated by Bertrand Meyer, "software entities (classes, modules, functions,
-etc.) should be open for extension, but closed for modification." What does that
-mean though? This principle basically states that you should allow users to
-extend the functionality of your module without having to open up the `.js`
-source code file and manually manipulate it.
+### Princípio do Aberto/Fechado (OCP)
+Como foi dito por Bertrand Meyer, "entidades de software (classes, módulos, funções, etc.) devem se manter abertas para extensões, mas fechadas para modificações." Mas o que isso significa? Esse principio basicamente diz que você deve permitir que usuários estendam as funcionalidades do seu módulo sem ter que abrir o arquivo de código fonte `.js` e manipulá-lo manualmente.
 
-**Bad:**
+**Ruim:**
 ```javascript
 class AjaxRequester {
   constructor() {
-    // What if we wanted another HTTP Method, like DELETE? We would have to
-    // open this file up and modify this and put it in manually.
+    // E se nós quiséssemos outro método HTTP, como DELETE? Nós teríamos que
+    // abrir esse arquivo e modificar o this para colocá-lo manualmente.
     this.HTTP_METHODS = ['POST', 'PUT', 'GET'];
   }
 
@@ -970,7 +959,7 @@ class AjaxRequester {
 }
 ```
 
-**Good**:
+**Bom**:
 ```javascript
 class AjaxRequester {
   constructor() {
@@ -986,24 +975,15 @@ class AjaxRequester {
   }
 }
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#table-of-contents)**
 
 
-### Liskov Substitution Principle (LSP)
-This is a scary term for a very simple concept. It's formally defined as "If S
-is a subtype of T, then objects of type T may be replaced with objects of type S
-(i.e., objects of type S may substitute objects of type T) without altering any
-of the desirable properties of that program (correctness, task performed,
-etc.)." That's an even scarier definition.
+### Princípio de Substituição de Liskov (LSP)
+Esse é um termo assustador para um conceito extremamente simples. É formalmente definido como “Se S é um subtipo de T, então objetos do tipo T podem ser substituídos por objetos com o tipo S (i.e., objetos do tipo S podem substituir objetos do tipo T) sem alterar nenhuma das propriedades desejáveis de um programa (corretude, performance em tarefas, etc.).” Esta é uma definição ainda mais assustadora.
 
-The best explanation for this is if you have a parent class and a child class,
-then the base class and child class can be used interchangeably without getting
-incorrect results. This might still be confusing, so let's take a look at the
-classic Square-Rectangle example. Mathematically, a square is a rectangle, but
-if you model it using the "is-a" relationship via inheritance, you quickly
-get into trouble.
+A melhor explicação para este conceito é se você tiver uma classe pai e uma classe filha, então a classe base e a classe filha pode ser usadas indistintamente sem ter resultados incorretos. Isso ainda pode ser confuso, então vamos dar uma olhada no exemplo clássico do Quadrado-Retângulo (Square-Rectangle). Matematicamente, um quadrado é um retângulo, mas se você modelá-lo usando uma relação “isto-é” através de herança, você rapidamente terá problemas.
 
-**Bad:**
+**Ruim:**
 ```javascript
 class Rectangle {
   constructor() {
@@ -1052,7 +1032,7 @@ function renderLargeRectangles(rectangles) {
   rectangles.forEach((rectangle) => {
     rectangle.setWidth(4);
     rectangle.setHeight(5);
-    const area = rectangle.getArea(); // BAD: Will return 25 for Square. Should be 20.
+    const area = rectangle.getArea(); // RUIM: Retornará 25 para o Quadrado. Deveria ser 20.
     rectangle.render(area);
   });
 }
@@ -1061,7 +1041,7 @@ const rectangles = [new Rectangle(), new Rectangle(), new Square()];
 renderLargeRectangles(rectangles);
 ```
 
-**Good**:
+**Bom**:
 ```javascript
 class Shape {
   constructor() {}
@@ -1129,23 +1109,16 @@ function renderLargeShapes(shapes) {
 const shapes = [new Rectangle(), new Rectangle(), new Square()];
 renderLargeShapes(shapes);
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#table-of-contents)**
 
-### Interface Segregation Principle (ISP)
-JavaScript doesn't have interfaces so this principle doesn't apply as strictly
-as others. However, it's important and relevant even with JavaScript's lack of
-type system.
+### Princípio da Segregação de Interface (ISP)
+JavaScript não possui interfaces então esse principio não se aplica estritamente como os outros. Entretanto, é importante e relevante até mesmo com a falta de um sistema de tipos em JavaScript.
 
-ISP states that "Clients should not be forced to depend upon interfaces that
-they do not use." Interfaces are implicit contracts in JavaScript because of
-duck typing.
+ISP diz que "Clientes não deve ser forcados a depender de interfaces que eles não usam." Interfaces são contratos implícitos em JavaScript devido a sua tipagem pato (duck typing).
 
-A good example to look at that demonstrates this principle in JavaScript is for
-classes that require large settings objects. Not requiring clients to setup
-huge amounts of options is beneficial, because most of the time they won't need
-all of the settings. Making them optional helps prevent having a "fat interface".
+Um bom exemplo para se observar que demonstra esse principio em JavaScript é de classes que requerem objetos de configurações grandes. Não pedir para clientes definirem grandes quantidades de opções é benéfico, porque na maioria das vezes eles não precisarão de todas as configurações. Torná-las opcionais ajuda a prevenir uma “interferência gorda”.
 
-**Bad:**
+**Ruim:**
 ```javascript
 class DOMTraverser {
   constructor(settings) {
@@ -1165,13 +1138,13 @@ class DOMTraverser {
 
 const $ = new DOMTraverser({
   rootNode: document.getElementsByTagName('body'),
-  animationModule() {} // Most of the time, we won't need to animate when traversing.
+  animationModule() {} //  Na maioria das vezes, não precisamos animar enquanto atravessamos (traversing).
   // ...
 });
 
 ```
 
-**Good**:
+**Bom**:
 ```javascript
 class DOMTraverser {
   constructor(settings) {
@@ -1203,7 +1176,7 @@ const $ = new DOMTraverser({
   }
 });
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#table-of-contents)**
 
 ### Dependency Inversion Principle (DIP)
 This principle states two essential things:
