@@ -37,7 +37,7 @@ const yyyymmdstr = moment().format('YYYY/MM/DD');
 ```javascript
 const yearMonthDay = moment().format('YYYY/MM/DD');
 ```
-**[⬆ voltar ao topo](#índice)**
+**[⬆ voltar ao topo](#Índice)**
 
 ### Use o mesmo vocabulário para o mesmo tipo de variável
 
@@ -792,25 +792,19 @@ inventoryTracker('apples', req, 'www.inventory-awesome.io');
 ```
 **[⬆ voltar ao topo](#table-of-contents)**
 
-## **Objects and Data Structures**
-### Use getters and setters
-JavaScript doesn't have interfaces or types so it is very hard to enforce this
-pattern, because we don't have keywords like `public` and `private`. As it is,
-using getters and setters to access data on objects is far better than simply
-looking for a property on an object. "Why?" you might ask. Well, here's an
-unorganized list of reasons why:
+## **Objetos e Estruturas de Dados**
+### Use getters e setters
+JavaScript não possui interfaces ou tipos então é muito difícil forçar esse padrão, porque nós não temos palavras-chave como `public` e `private`. Usar getters e setters para acessar dados nos objetos é bem melhor que simplesmente procurar por uma propriedade em um objeto. "Por que?" você deve perguntar. Bem, aqui vai uma lista desorganizada de motivos:
 
-* When you want to do more beyond getting an object property, you don't have
-to look up and change every accessor in your codebase.
-* Makes adding validation simple when doing a `set`.
-* Encapsulates the internal representation.
-* Easy to add logging and error handling when getting and setting.
-* Inheriting this class, you can override default functionality.
-* You can lazy load your object's properties, let's say getting it from a
-server.
+* Quando você quer fazer mais além de pegar (get) a propriedade de um objeto, você não tem que procurar e mudar todos os acessores do eu código.
+* Torna mais fácil fazer validação quando estiver dando um `set`.
+* Encapsula a representação interna
+* Mais fácil de adicionar logs e tratamento de erros quando dando get and set.
+* Herdando esta classe, você pode sobrescrever as funcionalidades padrões.
+* Você pode usar lazy loading nas propriedades de seu objeto, digamos por exemplo pegando ele de um servidor.
 
 
-**Bad:**
+**Ruim:**
 ```javascript
 class BankAccount {
   constructor() {
@@ -824,14 +818,14 @@ const bankAccount = new BankAccount();
 bankAccount.balance -= 100;
 ```
 
-**Good**:
+**Bom**:
 ```javascript
 class BankAccount {
   constructor(balance = 1000) {
     this._balance = balance;
   }
 
-  // It doesn't have to be prefixed with `get` or `set` to be a getter/setter
+  // Não precisa ter como prefixo `get` ou `set` para ser um getter/setter
   set balance(amount) {
     if (verifyIfAmountCanBeSetted(amount)) {
       this._balance = amount;
@@ -849,20 +843,20 @@ class BankAccount {
 
 const bankAccount = new BankAccount();
 
-// Buy shoes...
+// Comprar sapatos...
 bankAccount.balance -= shoesPrice;
 
-// Get balance
+// Get o balanço
 let balance = bankAccount.balance;
 
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#table-of-contents)**
 
 
-### Make objects have private members
-This can be accomplished through closures (for ES5 and below).
+### Faça objetos terem membros privados
+Isto pode ser alcançado através de closures (para ES5 e além).
 
-**Bad:**
+**Ruim:**
 ```javascript
 
 const Employee = function(name) {
@@ -879,7 +873,7 @@ delete employee.name;
 console.log(`Employee name: ${employee.getName()}`); // Employee name: undefined
 ```
 
-**Good**:
+**Bom**:
 ```javascript
 const Employee = function (name) {
   this.getName = function getName() {
@@ -892,7 +886,7 @@ console.log(`Employee name: ${employee.getName()}`); // Employee name: John Doe
 delete employee.name;
 console.log(`Employee name: ${employee.getName()}`); // Employee name: John Doe
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#table-of-contents)**
 
 
 ## **Classes**
