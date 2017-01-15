@@ -1178,28 +1178,16 @@ const $ = new DOMTraverser({
 ```
 **[⬆ voltar ao topo](#table-of-contents)**
 
-### Dependency Inversion Principle (DIP)
-This principle states two essential things:
-1. High-level modules should not depend on low-level modules. Both should
-depend on abstractions.
-2. Abstractions should not depend upon details. Details should depend on
-abstractions.
+### Princípio da Inversão de Dependência  (DIP)
+Este principio nos diz duas coisas essenciais:
+1. Módulos de alto nível não devem depender de módulos de baixo nível. Ambos devem depender de abstrações.
+2. Abstrações não devem depender de detalhes. Detalhes devem depender de abstrações.
 
-This can be hard to understand at first, but if you've worked with Angular.js,
-you've seen an implementation of this principle in the form of Dependency
-Injection (DI). While they are not identical concepts, DIP keeps high-level
-modules from knowing the details of its low-level modules and setting them up.
-It can accomplish this through DI. A huge benefit of this is that it reduces
-the coupling between modules. Coupling is a very bad development pattern because
-it makes your code hard to refactor.
+Isso pode ser difícil de entender a principio, mas se você já trabalhou com Angular.js, você já viu uma implementação deste principio na forma de injeção de dependência (DI). Apesar de não serem conceitos idênticos, DIP não deixa módulos de alto nível saber os detalhes de seus módulos de baixo nível, assim como configurá-los. Isso pode ser alcançado através de DI. Um grande beneficio é que reduz o acoplamento entre os módulos. Acoplamento é um padrão de desenvolvimento muito ruim porque torna seu código mais difícil de ser refatorado.
 
-As stated previously, JavaScript doesn't have interfaces so the abstractions
-that are depended upon are implicit contracts. That is to say, the methods
-and properties that an object/class exposes to another object/class. In the
-example below, the implicit contract is that any Request module for an
-`InventoryTracker` will have a `requestItems` method.
+Como dito anteriormente, JavaScript não possui interfaces, então as abstrações que são necessárias são contratos implícitos. Que quer dizer que, os métodos e as classes que um objeto/classe expõe para outros objeto/classe. No exemplo abaixo, o contrato implícito é que qualquer modulo de Request  para `InventoryTracker` terá um método `requestItems`:
 
-**Bad:**
+**Ruim:**
 ```javascript
 class InventoryRequester {
   constructor() {
@@ -1215,8 +1203,8 @@ class InventoryTracker {
   constructor(items) {
     this.items = items;
 
-    // BAD: We have created a dependency on a specific request implementation.
-    // We should just have requestItems depend on a request method: `request`
+    // Ruim: Nós criamos uma dependência numa implementação de request especifica.
+    // Nós deveriamos apenas ter requestItems dependendo de um método de request: `request`
     this.requester = new InventoryRequester();
   }
 
@@ -1231,7 +1219,7 @@ const inventoryTracker = new InventoryTracker(['apples', 'bananas']);
 inventoryTracker.requestItems();
 ```
 
-**Good**:
+**Bom**:
 ```javascript
 class InventoryTracker {
   constructor(items, requester) {
@@ -1266,20 +1254,17 @@ class InventoryRequesterV2 {
   }
 }
 
-// By constructing our dependencies externally and injecting them, we can easily
-// substitute our request module for a fancy new one that uses WebSockets.
+// Construindo nossas dependências externamente e injetando-as, podemos facilmente
+// substituir nosso modulo de request por um novo mais chique que usa WebSockets
 const inventoryTracker = new InventoryTracker(['apples', 'bananas'], new InventoryRequesterV2());
 inventoryTracker.requestItems();
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#table-of-contents)**
 
-### Prefer ES2015/ES6 classes over ES5 plain functions
-It's very difficult to get readable class inheritance, construction, and method
-definitions for classical ES5 classes. If you need inheritance (and be aware
-that you might not), then prefer classes. However, prefer small functions over
-classes until you find yourself needing larger and more complex objects.
+### Prefira classes do ES2015/ES6 ao invés de funções simples do ES5
+É muito difícil conseguir que herança de classe, construtores, e definições de métodos sejam legíveis para classes de ES5 clássicas. Se você precisa de herança (e esteja ciente que você talvez não precise), então prefira classes. Entretanto, prefira funções pequenas ao invés de classes até que você precise de objetos maiores e mais complexos.
 
-**Bad:**
+**Ruim:**
 ```javascript
 const Animal = function(age) {
   if (!(this instanceof Animal)) {
@@ -1318,7 +1303,7 @@ Human.prototype.constructor = Human;
 Human.prototype.speak = function speak() {};
 ```
 
-**Good:**
+**Bom:**
 ```javascript
 class Animal {
   constructor(age) {
@@ -1346,19 +1331,15 @@ class Human extends Mammal {
   speak() { /* ... */ }
 }
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#table-of-contents)**
 
 
-### Use method chaining
-Against the advice of Clean Code, this is one place where we will have to differ.
-It has been argued that method chaining is unclean and violates the [Law of Demeter](https://en.wikipedia.org/wiki/Law_of_Demeter).
-Maybe it's true, but this pattern is very useful in JavaScript and you see it in
-many libraries such as jQuery and Lodash. It allows your code to be expressive,
-and less verbose. For that reason, I say, use method chaining and take a look at
-how clean your code will be. In your class functions, simply return `this` at
-the end of every function, and you can chain further class methods onto it.
+### Use encadeamento de métodos
+Indo contra um conselho de Código Limpo, aqui é a ocasião onde teremos que divergir.
+Foi argumentado que o encadeamento de métodos não é claro e que viola a [Lei de Demeter](https://en.wikipedia.org/wiki/Law_of_Demeter).
+Talvez seja verdade, mas esse padrão é muito útil em JavaScript e você o vera em muitas bibliotecas como jQuery e Lodash. Ele permite que seu código seja expressivo e menos verboso. Por esse motivo, eu digo, use encadeamento de métodos e dê uma olhada em como o seu código ficará mais limpo. Em suas funções de classes, apenas retorne `this` no final de cada função, e você poderá encadear mais métodos de classe nele.
 
-**Bad:**
+**Ruim:**
 ```javascript
 class Car {
   constructor() {
@@ -1391,7 +1372,7 @@ car.setModel('F-150');
 car.save();
 ```
 
-**Good**:
+**Bom**:
 ```javascript
 class Car {
   constructor() {
@@ -1402,25 +1383,25 @@ class Car {
 
   setMake(make) {
     this.make = make;
-    // NOTE: Returning this for chaining
+    // NOTA: Retorne this para encadear
     return this;
   }
 
   setModel(model) {
     this.model = model;
-    // NOTE: Returning this for chaining
+    // NOTA: Retorne this para encadear
     return this;
   }
 
   setColor(color) {
     this.color = color;
-    // NOTE: Returning this for chaining
+    // NOTA: Retorne this para encadear
     return this;
   }
 
   save() {
     console.log(this.make, this.model, this.color);
-    // NOTE: Returning this for chaining
+    // NOTA: Retorne this para encadear
     return this;
   }
 }
@@ -1431,27 +1412,18 @@ const car = new Car()
   .setModel('F-150')
   .save();
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#table-of-contents)**
 
-### Prefer composition over inheritance
-As stated famously in [*Design Patterns*](https://en.wikipedia.org/wiki/Design_Patterns) by the Gang of Four,
-you should prefer composition over inheritance where you can. There are lots of
-good reasons to use inheritance and lots of good reasons to use composition.
-The main point for this maxim is that if your mind instinctively goes for
-inheritance, try to think if composition could model your problem better. In some
-cases it can.
+### Prefira composição ao invés de herança
+Como dito famosamente em  [*Padrão de projeto*](https://pt.wikipedia.org/wiki/Padr%C3%A3o_de_projeto_de_software) pela Guangue dos Quatro, você deve preferir composição sobre herança onde você puder. Existem muitas boas razoes para usar herança e muitas boas razoes para se usar composição. O ponto principal para essa máxima é que se sua mente for instintivamente para a herança, tente pensar se composição poderia modelar melhor o seu problema. Em alguns casos pode.
 
-You might be wondering then, "when should I use inheritance?" It
-depends on your problem at hand, but this is a decent list of when inheritance
-makes more sense than composition:
+Você deve estar pensando então, "quando eu deveria usar herança?" Isso depende especificamente do seu problema, mas essa é uma lista decente de quando herança faz mais sentido que composição:
 
-1. Your inheritance represents an "is-a" relationship and not a "has-a"
-relationship (Animal->Human vs. User->UserDetails).
-2. You can reuse code from the base classes (Humans can move like all animals).
-3. You want to make global changes to derived classes by changing a base class.
-(Change the caloric expenditure of all animals when they move).
+1. Sua herança representa uma relação de "isto-é" e não uma relação de "isto-tem" (Animal→Human vs. User->UserDetails)
+2. Você pode reutilizar código de classes de base (Humanos podem se mover como todos os animais).
+3. Você quer fazer mudanças globais para classes derivadas mudando apenas a classe base. (Mudar o custo calórico para todos os animais quando se movem).
 
-**Bad:**
+**Ruim:**
 ```javascript
 class Employee {
   constructor(name, email) {
@@ -1462,7 +1434,7 @@ class Employee {
   // ...
 }
 
-// Bad because Employees "have" tax data. EmployeeTaxData is not a type of Employee
+// Ruim porque Employees (Empregados) "tem" dados de impostos. EmployeeTaxData não é um tipo de Employee
 class EmployeeTaxData extends Employee {
   constructor(ssn, salary) {
     super();
@@ -1474,7 +1446,7 @@ class EmployeeTaxData extends Employee {
 }
 ```
 
-**Good**:
+**Bom**:
 ```javascript
 class EmployeeTaxData {
   constructor(ssn, salary) {
@@ -1498,7 +1470,7 @@ class Employee {
   // ...
 }
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#table-of-contents)**
 
 ## **Testing**
 Testing is more important than shipping. If you have no tests or an
@@ -1972,3 +1944,5 @@ const actions = function() {
 };
 ```
 **[⬆ back to top](#table-of-contents)**
+
+Atualizar a partir deste commit: https://github.com/ryanmcdermott/clean-code-javascript/commit/05089ba5de6a50190eaadd14276225d06863a8a0
