@@ -4,13 +4,13 @@
   1. [Introdução](#introdução)
   2. [Variáveis](#variáveis)
   3. [Funções](#funções)
-  4. [Objetos e Estruturas de Dados](#objects-and-data-structures)
+  4. [Objetos e Estruturas de Dados](#objetos-e-estruturas-de-dados)
   5. [Classes](#classes)
   6. [Testes](#testes)
-  7. [Concorrência](#concurrency)
-  8. [Tratamento de Erros](#error-handling)
-  9. [Formatação](#formatting)
-  10. [Comentários](#comments)
+  7. [Concorrência](#concorrência)
+  8. [Tratamento de Erros](#tratamento-de-erros)
+  9. [Formatação](#formatação)
+  10. [Comentários](#comentários)
 
 ## Introdução
 ![Imagem humorística da estimativa de qualidade do software baseado na contagem de quantos palavrões você gritou enquanto lia o código.](http://www.osnews.com/images/comics/wtfm.jpg)
@@ -33,7 +33,7 @@ Mais uma coisa: aprender isto não irá lhe transformar imediatamente em um des
 const yyyymmdstr = moment().format('YYYY/MM/DD');
 ```
 
-**Bom**:
+**Bom:**
 ```javascript
 const yearMonthDay = moment().format('YYYY/MM/DD');
 ```
@@ -48,11 +48,11 @@ getClientData();
 getCustomerRecord();
 ```
 
-**Bom**:
+**Bom:**
 ```javascript
 getUser();
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 ### Use nomes pesquisáveis
 Nós leremos mais código do que jamais seremos capazes de escreveremos. É importante que o código que escrevemos seja legível e pesquisável. *Não* dando nomes em variáveis que sejam significativos para entender nosso programa, machucamos nossos leitores. Torne seus nomes pesquisáveis. Ferramentas como [buddy.js](https://github.com/danielstjules/buddy.js) e [ESLint](https://github.com/eslint/eslint/blob/660e0918933e6e7fede26bc675a0763a6b357c94/docs/rules/no-magic-numbers.md) podem ajudar a identificar constantes sem nome.
@@ -66,7 +66,7 @@ setTimeout(() => {
 
 ```
 
-**Bom**:
+**Bom:**
 ```javascript
 // Declare-as como `const` global em letras maiúsculas.
 const SECONDS_IN_A_DAY = 86400;
@@ -76,7 +76,7 @@ setTimeout(() => {
 }, SECONDS_IN_A_DAY);
 
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 ### Use variáveis explicativas
 **Ruim:**
@@ -86,14 +86,14 @@ const cityStateRegex = /^[^,\\]+[,\\\s]+(.+?)\s*(\d{5})?$/;
 saveCityState(address.match(cityStateRegex)[1], address.match(cityStateRegex)[2]);
 ```
 
-**Bom**:
+**Bom:**
 ```javascript
 const address = 'One Infinite Loop, Cupertino 95014';
 const cityStateRegex = /^[^,\\]+[,\\\s]+(.+?)\s*(\d{5})?$/;
 const [, city, state] = address.match(cityStateRegex);
 saveCityState(city, state);
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 ### Evite Mapeamento Mental
 Explicito é melhor que implícito.
@@ -112,7 +112,7 @@ locations.forEach((l) => {
 });
 ```
 
-**Bom**:
+**Bom:**
 ```javascript
 const locations = ['Austin', 'New York', 'San Francisco'];
 locations.forEach((location) => {
@@ -124,7 +124,7 @@ locations.forEach((location) => {
   dispatch(location);
 });
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 ### Não adicione contextos desnecessários
 Se o nome de sua classe/objeto já lhe diz alguma coisa, não as repitas nos nomes de suas variáveis.
@@ -142,7 +142,7 @@ function paintCar(car) {
 }
 ```
 
-**Bom**:
+**Bom:**
 ```javascript
 const Car = {
   make: 'Honda',
@@ -154,7 +154,7 @@ function paintCar(car) {
   car.color = 'Red';
 }
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 ### Use argumentos padrões ao invés de curto circuitar ou condicionais
 
@@ -167,14 +167,14 @@ function createMicrobrewery(name) {
 
 ```
 
-**Bom**:
+**Bom:**
 ```javascript
 function createMicrobrewery(breweryName = 'Hipster Brew Co.') {
   ...
 }
 
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 ## **Funções**
 ### Argumentos de funções (idealmente 2 ou menos)
@@ -191,7 +191,7 @@ function createMenu(title, body, buttonText, cancellable) {
 }
 ```
 
-**Bom**:
+**Bom:**
 ```javascript
 const menuConfig = {
   title: 'Foo',
@@ -205,7 +205,7 @@ function createMenu(config) {
 }
 
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 
 ### Funções devem fazer uma coisa
@@ -223,7 +223,7 @@ function emailClients(clients) {
 }
 ```
 
-**Bom**:
+**Bom:**
 ```javascript
 function emailClients(clients) {
   clients
@@ -236,7 +236,7 @@ function isClientActive(client) {
   return clientRecord.isActive();
 }
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 ### Nomes de funções devem dizer o que elas fazem
 
@@ -252,7 +252,7 @@ const date = new Date();
 addToDate(date, 1);
 ```
 
-**Bom**:
+**Bom:**
 ```javascript
 function addMonthToDate(month, date) {
   // ...
@@ -261,7 +261,7 @@ function addMonthToDate(month, date) {
 const date = new Date();
 addMonthToDate(1, date);
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 ### Funções devem ter apenas um nível de abstração
 Quando você tem mais de um nível de abstração sua função provavelmente esta fazendo coisas demais. Dividir suas funções leva a reutilização e teste mais fáceis.
@@ -292,7 +292,7 @@ function parseBetterJSAlternative(code) {
 }
 ```
 
-**Bom**:
+**Bom:**
 ```javascript
 function tokenize(code) {
   const REGEXES = [
@@ -327,7 +327,7 @@ function parseBetterJSAlternative(code) {
   });
 }
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 ### Remova código duplicado
 Absolutamente nunca, nunca, em qualquer circunstância, tenha código duplicado. Não existe motivo para fazer isto e é possivelmente o pior pecado que você pode cometer como um desenvolvedor profissional. Código duplicado quer dizer que existe mais de um lugar onde você deverá alterar algo se precisar mudar alguma lógica. JavaScript possui tipagem fraca, então torna-se fácil ter funções genéricas. Aproveite-se disso! Ferramentas como [jsinspect](https://github.com/danielstjules/jsinspect) podem lhe ajudar a encontrar código duplicado elegível para refatoração.
@@ -365,7 +365,7 @@ function showManagerList(managers) {
 }
 ```
 
-**Bom**:
+**Bom:**
 ```javascript
 function showList(employees) {
   employees.forEach((employee) => {
@@ -388,7 +388,7 @@ function showList(employees) {
   });
 }
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 ### Defina (set) objetos padrões com Object.assign
 
@@ -412,7 +412,7 @@ function createMenu(config) {
 createMenu(menuConfig);
 ```
 
-**Bom**:
+**Bom:**
 ```javascript
 const menuConfig = {
   title: 'Order',
@@ -435,7 +435,7 @@ function createMenu(config) {
 
 createMenu(menuConfig);
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 
 ### Não use flags como parâmetros de funções
@@ -452,7 +452,7 @@ function createFile(name, temp) {
 }
 ```
 
-**Bom**:
+**Bom:**
 ```javascript
 function createFile(name) {
   fs.create(name);
@@ -462,7 +462,7 @@ function createTempFile(name) {
   createFile(`./temp/${name}`);
 }
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 ### Evite Efeitos Colaterais
 Uma função produz um efeito colateral se ela faz alguma coisa que não seja receber um valor de entrada e retornar outro(s) valor(es). Um efeito colateral pode ser escrever em um arquivo, modificar uma variável global, ou acidentalmente transferir todo seu dinheiro para um estranho.
@@ -486,7 +486,7 @@ splitIntoFirstAndLastName();
 console.log(name); // ['Ryan', 'McDermott'];
 ```
 
-**Bom**:
+**Bom:**
 ```javascript
 function splitIntoFirstAndLastName(name) {
   return name.split(' ');
@@ -498,7 +498,7 @@ const newName = splitIntoFirstAndLastName(name);
 console.log(name); // 'Ryan McDermott';
 console.log(newName); // ['Ryan', 'McDermott'];
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 ### Não escreva em funções globais
 Poluir globais é uma pratica ruim em JavaScript porque você pode causar conflito com outra biblioteca e o usuário da sua API não faria a menor ideia até que ele tivesse um exceção sendo levantada em produção. Vamos pensar em um exemplo: e se você quisesse estender o método nativo Array do JavaScript para ter um método `diff` que poderia mostrar a diferença entre dois vetores? Você poderia escrever sua nova função em `Array.prototype`, mas poderia colidir com outra biblioteca que tentou fazer a mesma coisa. E se esta outra biblioteca estava apenas usando `diff` para achar a diferença entre o primeiro e último elemento de um vetor? É por isso que seria muito melhor usar as classes padrões do ES2015/ES6 e apenas estender o `Array` global.
@@ -548,7 +548,7 @@ class SuperArray extends Array {
   }
 }
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 ### Favoreça programação funcional sobre programação imperativa
 JavaScript não é uma linguagem funcional da mesma forma que Haskell é, mas tem um toque de funcional em si. Linguagens funcionais são mais limpas e fáceis de se testar. Favoreça esse tipo de programação quando puder.
@@ -578,7 +578,7 @@ for (let i = 0; i < programmerOutput.length; i++) {
 }
 ```
 
-**Bom**:
+**Bom:**
 ```javascript
 const programmerOutput = [
   {
@@ -611,7 +611,7 @@ if (fsm.state === 'fetching' && isEmpty(listNode)) {
 }
 ```
 
-**Bom**:
+**Bom:**
 ```javascript
 function shouldShowSpinner(fsm, listNode) {
   return fsm.state === 'fetching' && isEmpty(listNode);
@@ -621,7 +621,7 @@ if (shouldShowSpinner(fsmInstance, listNodeInstance)) {
   // ...
 }
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 ### Evite negações de condicionais
 
@@ -636,7 +636,7 @@ if (!isDOMNodeNotPresent(node)) {
 }
 ```
 
-**Bom**:
+**Bom:**
 ```javascript
 function isDOMNodePresent(node) {
   // ...
@@ -646,7 +646,7 @@ if (isDOMNodePresent(node)) {
   // ...
 }
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 ### Evite condicionais
 Esta parece ser uma tarefa impossível. Da primeira vez que as pessoas escutam isso, a maioria diz, “como eu supostamente faria alguma coisa sem usar `if`? ” A resposta é que você pode usar polimorfismo para realizar a mesma tarefa em diversos casos. A segunda questão é geralmente, “bom, isso é ótimo, mas porque eu deveria fazer isso?” A resposta é um conceito de código limpo aprendido previamente: uma função deve fazer apenas uma coisa. Quando você tem classes e funções que tem declarações `if`, você esta dizendo para seu usuário que sua função faz mais de uma coisa. Relembre-se, apenas uma coisa.
@@ -668,7 +668,7 @@ class Airplane {
 }
 ```
 
-**Bom**:
+**Bom:**
 ```javascript
 class Airplane {
   // ...
@@ -695,7 +695,7 @@ class Cessna extends Airplane {
   }
 }
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 ### Evite checagem de tipos (parte 1)
 JavaScript não possui tipos, o que significa que suas funções podem receber qualquer tipo de argumento. Algumas vezes esta liberdade pode te morder, e se torna tentador fazer checagem de tipos em suas funções. Existem muitas formas de evitar ter que fazer isso. A primeira coisa a se considerar são APIs consistentes.
@@ -711,13 +711,13 @@ function travelToTexas(vehicle) {
 }
 ```
 
-**Bom**:
+**Bom:**
 ```javascript
 function travelToTexas(vehicle) {
   vehicle.move(this.currentLocation, new Location('texas'));
 }
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 ### Evite checagem de tipos (parte 2)
 Se você estiver trabalhando com valores primitivos básicos como strings, inteiros e vetores, e você não pode usar polimorfismo mas ainda sente a necessidade de checar o tipo, você deveria considerar usar TypeScript. É uma excelente alternativa para o JavaScript normal, já que fornece uma tipagem estática sobre a sintaxe  padrão do JavaScript. O problema com checagem manual em JavaScript é que para se fazer bem feito requer tanta verborragia extra que a falsa “tipagem-segura” que você consegue não compensa pela perca de legibilidade. Mantenha seu JavaScript limpo, escreve bons testes, e tenha boas revisões de código. Ou, de outra forma, faça tudo isso mas com TypeScript (que, como eu falei, é uma ótima alternativa!).
@@ -734,13 +734,13 @@ function combine(val1, val2) {
 }
 ```
 
-**Bom**:
+**Bom:**
 ```javascript
 function combine(val1, val2) {
   return val1 + val2;
 }
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 ### Não otimize demais
 Navegadores modernos fazem muitas otimizações por debaixo dos panos em tempo de execução. Muitas vezes, se você estiver otimizando esta apenas perdendo o seu tempo. [Existem bons recursos](https://github.com/petkaantonov/bluebird/wiki/Optimization-killers) para se verificar onde falta otimização. Foque nesses por enquanto, até que	eles sejam concertados caso seja possível.
@@ -755,13 +755,13 @@ for (let i = 0, len = list.length; i < len; i++) {
 }
 ```
 
-**Bom**:
+**Bom:**
 ```javascript
 for (let i = 0; i < list.length; i++) {
   // ...
 }
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 ### Remova código morto
 Código morto é tão ruim quanto código duplicado. Não existe nenhum motivo para deixá-lo em seu código. Se ele não estiver sendo chamado, livre-se dele. Ele ainda estará a salvo no seu histórico de versionamento se ainda precisar dele.
@@ -781,7 +781,7 @@ inventoryTracker('apples', req, 'www.inventory-awesome.io');
 
 ```
 
-**Bom**:
+**Bom:**
 ```javascript
 function newRequestModule(url) {
   // ...
@@ -790,7 +790,7 @@ function newRequestModule(url) {
 const req = newRequestModule;
 inventoryTracker('apples', req, 'www.inventory-awesome.io');
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 ## **Objetos e Estruturas de Dados**
 ### Use getters e setters
@@ -818,7 +818,7 @@ const bankAccount = new BankAccount();
 bankAccount.balance -= 100;
 ```
 
-**Bom**:
+**Bom:**
 ```javascript
 class BankAccount {
   constructor(balance = 1000) {
@@ -850,7 +850,7 @@ bankAccount.balance -= shoesPrice;
 let balance = bankAccount.balance;
 
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 
 ### Faça objetos terem membros privados
@@ -873,7 +873,7 @@ delete employee.name;
 console.log(`Employee name: ${employee.getName()}`); // Employee name: undefined
 ```
 
-**Bom**:
+**Bom:**
 ```javascript
 const Employee = function (name) {
   this.getName = function getName() {
@@ -886,7 +886,7 @@ console.log(`Employee name: ${employee.getName()}`); // Employee name: John Doe
 delete employee.name;
 console.log(`Employee name: ${employee.getName()}`); // Employee name: John Doe
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 
 ## **Classes**
@@ -912,7 +912,7 @@ class UserSettings {
 }
 ```
 
-**Bom**:
+**Bom:**
 ```javascript
 class UserAuth {
   constructor(user) {
@@ -938,7 +938,7 @@ class UserSettings {
   }
 }
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 ### Princípio do Aberto/Fechado (OCP)
 Como foi dito por Bertrand Meyer, "entidades de software (classes, módulos, funções, etc.) devem se manter abertas para extensões, mas fechadas para modificações." Mas o que isso significa? Esse principio basicamente diz que você deve permitir que usuários estendam as funcionalidades do seu módulo sem ter que abrir o arquivo de código fonte `.js` e manipulá-lo manualmente.
@@ -959,7 +959,7 @@ class AjaxRequester {
 }
 ```
 
-**Bom**:
+**Bom:**
 ```javascript
 class AjaxRequester {
   constructor() {
@@ -975,7 +975,7 @@ class AjaxRequester {
   }
 }
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 
 ### Princípio de Substituição de Liskov (LSP)
@@ -1041,7 +1041,7 @@ const rectangles = [new Rectangle(), new Rectangle(), new Square()];
 renderLargeRectangles(rectangles);
 ```
 
-**Bom**:
+**Bom:**
 ```javascript
 class Shape {
   constructor() {}
@@ -1109,7 +1109,7 @@ function renderLargeShapes(shapes) {
 const shapes = [new Rectangle(), new Rectangle(), new Square()];
 renderLargeShapes(shapes);
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 ### Princípio da Segregação de Interface (ISP)
 JavaScript não possui interfaces então esse principio não se aplica estritamente como os outros. Entretanto, é importante e relevante até mesmo com a falta de um sistema de tipos em JavaScript.
@@ -1144,7 +1144,7 @@ const $ = new DOMTraverser({
 
 ```
 
-**Bom**:
+**Bom:**
 ```javascript
 class DOMTraverser {
   constructor(settings) {
@@ -1176,7 +1176,7 @@ const $ = new DOMTraverser({
   }
 });
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 ### Princípio da Inversão de Dependência  (DIP)
 Este principio nos diz duas coisas essenciais:
@@ -1219,7 +1219,7 @@ const inventoryTracker = new InventoryTracker(['apples', 'bananas']);
 inventoryTracker.requestItems();
 ```
 
-**Bom**:
+**Bom:**
 ```javascript
 class InventoryTracker {
   constructor(items, requester) {
@@ -1259,7 +1259,7 @@ class InventoryRequesterV2 {
 const inventoryTracker = new InventoryTracker(['apples', 'bananas'], new InventoryRequesterV2());
 inventoryTracker.requestItems();
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 ### Prefira classes do ES2015/ES6 ao invés de funções simples do ES5
 É muito difícil conseguir que herança de classe, construtores, e definições de métodos sejam legíveis para classes de ES5 clássicas. Se você precisa de herança (e esteja ciente que você talvez não precise), então prefira classes. Entretanto, prefira funções pequenas ao invés de classes até que você precise de objetos maiores e mais complexos.
@@ -1331,7 +1331,7 @@ class Human extends Mammal {
   speak() { /* ... */ }
 }
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 
 ### Use encadeamento de métodos
@@ -1372,7 +1372,7 @@ car.setModel('F-150');
 car.save();
 ```
 
-**Bom**:
+**Bom:**
 ```javascript
 class Car {
   constructor() {
@@ -1412,7 +1412,7 @@ const car = new Car()
   .setModel('F-150')
   .save();
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 ### Prefira composição ao invés de herança
 Como dito famosamente em  [*Padrão de projeto*](https://pt.wikipedia.org/wiki/Padr%C3%A3o_de_projeto_de_software) pela Guangue dos Quatro, você deve preferir composição sobre herança onde você puder. Existem muitas boas razoes para usar herança e muitas boas razoes para se usar composição. O ponto principal para essa máxima é que se sua mente for instintivamente para a herança, tente pensar se composição poderia modelar melhor o seu problema. Em alguns casos pode.
@@ -1446,7 +1446,7 @@ class EmployeeTaxData extends Employee {
 }
 ```
 
-**Bom**:
+**Bom:**
 ```javascript
 class EmployeeTaxData {
   constructor(ssn, salary) {
@@ -1470,7 +1470,7 @@ class Employee {
   // ...
 }
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 ## **Testes**
 Testes são mais importantes que entregas. Se você não possui testes ou um quantidade inadequada, então toda vez que você entregar seu código você não tera certeza se você não quebrou alguma coisa. Decidir o que constitui uma quantidade adequada é responsabilidade do seu time, mas ter 100% de cobertura (todas as sentenças e branches) é a maneira que se alcança uma alta confiança e uma paz de espirito em desenvolvimento. Isso quer dizer que além de ter um ótimo framework de testes, você também precisa usar uma [noa ferramenta de cobertura](http://gotwarlost.github.io/istanbul/).
@@ -1502,7 +1502,7 @@ describe('MakeMomentJSGreatAgain', () => {
 });
 ```
 
-**Bom**:
+**Bom:**
 ```javascript
 const assert = require('assert');
 
@@ -1526,7 +1526,7 @@ describe('MakeMomentJSGreatAgain', () => {
   });
 });
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 ## **Concorrência**
 ### Use Promessas, não callbacks
@@ -1550,7 +1550,7 @@ require('request').get('https://en.wikipedia.org/wiki/Robert_Cecil_Martin', (req
 
 ```
 
-**Good**:
+**Bom:**
 ```javascript
 require('request-promise').get('https://en.wikipedia.org/wiki/Robert_Cecil_Martin')
   .then((response) => {
@@ -1564,7 +1564,7 @@ require('request-promise').get('https://en.wikipedia.org/wiki/Robert_Cecil_Marti
   });
 
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 ### Async/Await são ainda mais limpas que Promessas
 Promessas são uma alternativa bem mais limpa que callbacks, mas o ES2017/ES8 traz `async` e `await` que oferecem uma solução ainda mais limpa. Tudo o que você precisa é uma função que tem como prefixo a palavra-chave `async`, e então você pode escrever sua logica imperativamente sem usar `then` para encadear suas funções. Use isto se você puder tirar vantagem das funcionalidades do  ES2017/ES8 hoje!
@@ -1584,7 +1584,7 @@ require('request-promise').get('https://en.wikipedia.org/wiki/Robert_Cecil_Marti
 
 ```
 
-**Bom**:
+**Bom:**
 ```javascript
 async function getCleanCodeArticle() {
   try {
@@ -1599,10 +1599,10 @@ async function getCleanCodeArticle() {
   }
 }
 ```
-**[⬆ voltar ao topo](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 
-## **Error Handling**
+## **Tratamento de Erros**
 Thrown errors are a good thing! They mean the runtime has successfully
 identified when something in your program has gone wrong and it's letting
 you know by stopping function execution on the current stack, killing the
@@ -1616,7 +1616,7 @@ to the console. If you wrap any bit of code in a `try/catch` it means you
 think an error may occur there and therefore you should have a plan,
 or create a code path, for when it occurs.
 
-**Bad:**
+**Ruim:**
 ```javascript
 try {
   functionThatMightThrow();
@@ -1625,7 +1625,7 @@ try {
 }
 ```
 
-**Good:**
+**Bom:**
 ```javascript
 try {
   functionThatMightThrow();
@@ -1644,7 +1644,7 @@ try {
 For the same reason you shouldn't ignore caught errors
 from `try/catch`.
 
-**Bad:**
+**Ruim:**
 ```javascript
 getdata()
 .then((data) => {
@@ -1655,7 +1655,7 @@ getdata()
 });
 ```
 
-**Good:**
+**Bom:**
 ```javascript
 getdata()
 .then((data) => {
@@ -1672,10 +1672,10 @@ getdata()
 });
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 
-## **Formatting**
+## **Formatação**
 Formatting is subjective. Like many rules herein, there is no hard and fast
 rule that you must follow. The main point is DO NOT ARGUE over formatting.
 There are [tons of tools](http://standardjs.com/rules.html) to automate this.
@@ -1690,7 +1690,7 @@ JavaScript is untyped, so capitalization tells you a lot about your variables,
 functions, etc. These rules are subjective, so your team can choose whatever
 they want. The point is, no matter what you all choose, just be consistent.
 
-**Bad:**
+**Ruim:**
 ```javascript
 const DAYS_IN_WEEK = 7;
 const daysInMonth = 30;
@@ -1705,7 +1705,7 @@ class animal {}
 class Alpaca {}
 ```
 
-**Good**:
+**Bom:**
 ```javascript
 const DAYS_IN_WEEK = 7;
 const DAYS_IN_MONTH = 30;
@@ -1719,7 +1719,7 @@ function restoreDatabase() {}
 class Animal {}
 class Alpaca {}
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 
 ### Function callers and callees should be close
@@ -1727,7 +1727,7 @@ If a function calls another, keep those functions vertically close in the source
 file. Ideally, keep the caller right above the callee. We tend to read code from
 top-to-bottom, like a newspaper. Because of this, make your code read that way.
 
-**Bad:**
+**Ruim:**
 ```javascript
 class PerformanceReview {
   constructor(employee) {
@@ -1766,7 +1766,7 @@ const review = new PerformanceReview(user);
 review.perfReview();
 ```
 
-**Good**:
+**Bom:**
 ```javascript
 class PerformanceReview {
   constructor(employee) {
@@ -1805,13 +1805,13 @@ const review = new PerformanceReview(employee);
 review.perfReview();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
-## **Comments**
+## **Comentários**
 ### Only comment things that have business logic complexity.
 Comments are an apology, not a requirement. Good code *mostly* documents itself.
 
-**Bad:**
+**Ruim:**
 ```javascript
 function hashIt(data) {
   // The hash
@@ -1832,7 +1832,7 @@ function hashIt(data) {
 }
 ```
 
-**Good**:
+**Bom:**
 ```javascript
 
 function hashIt(data) {
@@ -1849,12 +1849,12 @@ function hashIt(data) {
 }
 
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 ### Don't leave commented out code in your codebase
 Version control exists for a reason. Leave old code in your history.
 
-**Bad:**
+**Ruim:**
 ```javascript
 doStuff();
 // doOtherStuff();
@@ -1862,17 +1862,17 @@ doStuff();
 // doSoMuchStuff();
 ```
 
-**Good**:
+**Bom:**
 ```javascript
 doStuff();
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 ### Don't have journal comments
 Remember, use version control! There's no need for dead code, commented code,
 and especially journal comments. Use `git log` to get history!
 
-**Bad:**
+**Ruim:**
 ```javascript
 /**
  * 2016-12-20: Removed monads, didn't understand them (RM)
@@ -1885,19 +1885,19 @@ function combine(a, b) {
 }
 ```
 
-**Good**:
+**Bom:**
 ```javascript
 function combine(a, b) {
   return a + b;
 }
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#Índice)**
 
 ### Avoid positional markers
 They usually just add noise. Let the functions and variable names along with the
 proper indentation and formatting give the visual structure to your code.
 
-**Bad:**
+**Ruim:**
 ```javascript
 ////////////////////////////////////////////////////////////////////////////////
 // Scope Model Instantiation
@@ -1915,7 +1915,7 @@ const actions = function() {
 };
 ```
 
-**Good**:
+**Bom:**
 ```javascript
 $scope.model = {
   menu: 'foo',
@@ -1926,6 +1926,4 @@ const actions = function() {
   // ...
 };
 ```
-**[⬆ back to top](#table-of-contents)**
-
-Atualizar a partir deste commit: https://github.com/ryanmcdermott/clean-code-javascript/commit/05089ba5de6a50190eaadd14276225d06863a8a0
+**[⬆ voltar ao topo](#Índice)**
