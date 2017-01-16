@@ -1676,19 +1676,20 @@ getdata()
 
 
 ## **Formatação**
-Formatting is subjective. Like many rules herein, there is no hard and fast
-rule that you must follow. The main point is DO NOT ARGUE over formatting.
-There are [tons of tools](http://standardjs.com/rules.html) to automate this.
-Use one! It's a waste of time and money for engineers to argue over formatting.
+Formatação é subjetiva. Como muitas regras aqui, não há nenhuma regra fixa e
+rápida que você precisa seguir. O ponto principal é NÃO DISCUTA sobre formatação.
+Existem [muitas ferramentas](http://standardjs.com/rules.html) para automatizar isso.
+Utilize uma! É um desperdicio de tempo e dinheiro para engenheiros discutirem sobre
+formatação.
 
-For things that don't fall under the purview of automatic formatting
-(indentation, tabs vs. spaces, double vs. single quotes, etc.) look here
-for some guidance.
+Para coisas que não possam utilizar formatação automática (identação, tabs vs. espaços,
+aspas simples vs. duplas, etc.) olhe aqui para alguma orientação.
 
-### Use consistent capitalization
-JavaScript is untyped, so capitalization tells you a lot about your variables,
-functions, etc. These rules are subjective, so your team can choose whatever
-they want. The point is, no matter what you all choose, just be consistent.
+### Utilize capitalização consistente
+JavaScript não é uma linguagem tipada, então a capitalização diz muito sobre
+suas variáveis, funções, etc. Estas regras são subjetivas, então sua equipe 
+pode escolher o que quiserem. O ponto é, não importa o que vocês todos escolham,
+apenas seja consistente.
 
 **Ruim:**
 ```javascript
@@ -1722,10 +1723,11 @@ class Alpaca {}
 **[⬆ voltar ao topo](#Índice)**
 
 
-### Function callers and callees should be close
-If a function calls another, keep those functions vertically close in the source
-file. Ideally, keep the caller right above the callee. We tend to read code from
-top-to-bottom, like a newspaper. Because of this, make your code read that way.
+### Funções e chamadas de funções devem estar próximas
+Se uma função chamar outra, mantenha estas funções verticalmente próximas no arquivo
+fonte. Em um cenário ideal, manter a chamada logo assima da função. Nós tendemos a
+ler códigos de cima para baixo, como um jornal. Por causa disso, faça o seu código
+desta maneira.
 
 **Ruim:**
 ```javascript
@@ -1808,25 +1810,25 @@ review.perfReview();
 **[⬆ voltar ao topo](#Índice)**
 
 ## **Comentários**
-### Only comment things that have business logic complexity.
-Comments are an apology, not a requirement. Good code *mostly* documents itself.
+### Apenas comente coisas que tenham complexidade de lógica de negócio.
+Comentários são uma apologia, não um requisito. Um bom código documenta-se, *a maior parte*, por si só.
 
 **Ruim:**
 ```javascript
 function hashIt(data) {
-  // The hash
+  // A hash
   let hash = 0;
 
-  // Length of string
+  // Tamanho da string
   const length = data.length;
 
-  // Loop through every character in data
+  // Loop em cada caracter da informação
   for (let i = 0; i < length; i++) {
-    // Get character code.
+    // Pega o código do caracter.
     const char = data.charCodeAt(i);
-    // Make the hash
+    // Cria a hash
     hash = ((hash << 5) - hash) + char;
-    // Convert to 32-bit integer
+    // Converte para um integer 32-bit
     hash &= hash;
   }
 }
@@ -1843,7 +1845,7 @@ function hashIt(data) {
     const char = data.charCodeAt(i);
     hash = ((hash << 5) - hash) + char;
 
-    // Convert to 32-bit integer
+    // Converte para um integer 32-bit
     hash &= hash;
   }
 }
@@ -1851,8 +1853,8 @@ function hashIt(data) {
 ```
 **[⬆ voltar ao topo](#Índice)**
 
-### Don't leave commented out code in your codebase
-Version control exists for a reason. Leave old code in your history.
+### Não deixe código comentado na sua base de código
+Controle de versão existe por uma razão. Deixar códigos velhos no seu histórico.
 
 **Ruim:**
 ```javascript
@@ -1868,17 +1870,18 @@ doStuff();
 ```
 **[⬆ voltar ao topo](#Índice)**
 
-### Don't have journal comments
-Remember, use version control! There's no need for dead code, commented code,
-and especially journal comments. Use `git log` to get history!
+### Não comente registro de alterações
+Lembre-se, utilize controle de versão! Não tem necessidade em deixar códigos
+inutlizados, códigos comentados e especialmente registros de alterações.
+Utilize `git log` para pegar o histórico!
 
 **Ruim:**
 ```javascript
 /**
- * 2016-12-20: Removed monads, didn't understand them (RM)
- * 2016-10-01: Improved using special monads (JP)
- * 2016-02-03: Removed type-checking (LI)
- * 2015-03-14: Added combine with type-checking (JR)
+ * 2016-12-20: Removidas monads, não entendia elas (RM)
+ * 2016-10-01: Melhoria utilizando monads especiais (JP)
+ * 2016-02-03: Removido checagem de tipos (LI)
+ * 2015-03-14: Adicionada checagem de tipos (JR)
  */
 function combine(a, b) {
   return a + b;
@@ -1893,14 +1896,14 @@ function combine(a, b) {
 ```
 **[⬆ voltar ao topo](#Índice)**
 
-### Avoid positional markers
-They usually just add noise. Let the functions and variable names along with the
-proper indentation and formatting give the visual structure to your code.
+### Evite marcadores de posição
+Eles geralmente criam ruídos. Deixe que as funções e nomes de variáveis em conjunto
+com a devida identação e formatação dar a estrutura visual para o seu código.
 
 **Ruim:**
 ```javascript
 ////////////////////////////////////////////////////////////////////////////////
-// Scope Model Instantiation
+// Intanciação do Scope Model
 ////////////////////////////////////////////////////////////////////////////////
 $scope.model = {
   menu: 'foo',
@@ -1908,7 +1911,7 @@ $scope.model = {
 };
 
 ////////////////////////////////////////////////////////////////////////////////
-// Action setup
+// Configuração da Action
 ////////////////////////////////////////////////////////////////////////////////
 const actions = function() {
   // ...
