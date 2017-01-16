@@ -1603,18 +1603,18 @@ async function getCleanCodeArticle() {
 
 
 ## **Tratamento de Erros**
-Thrown errors are a good thing! They mean the runtime has successfully
-identified when something in your program has gone wrong and it's letting
-you know by stopping function execution on the current stack, killing the
-process (in Node), and notifying you in the console with a stack trace.
+`throw error` é uma coisa boa! Eles significam que o programa identificou
+com sucesso quando algo no deu errado e está permitindo que você saiba parando
+a execução da função no processo atual, fechando o processo (em Node), e
+notificando você no console com a pilha processos.
 
-### Don't ignore caught errors
-Doing nothing with a caught error doesn't give you the ability to ever fix
-or react to said error. Logging the error to the console (`console.log`)
-isn't much better as often times it can get lost in a sea of things printed
-to the console. If you wrap any bit of code in a `try/catch` it means you
-think an error may occur there and therefore you should have a plan,
-or create a code path, for when it occurs.
+### Não ignore erros capturados
+No fazer nada com um erro capturado no te dá a habilidade de resolve-lo ou
+reagir ao erro informado. Exibir um log no console(`console.log`) não é muito
+melhor porque muitas vezes ele pode ficar perdido entre um monte de outras
+coisas impressas no console. Se você envolver qualquer pedaço de código em um
+`try/catch` isso significa que você acredita que um erro pode ocorrer lá e então
+você deveria ter um plano, ou criar caminho de código para quando isso ocorrer.
 
 **Ruim:**
 ```javascript
@@ -1630,19 +1630,19 @@ try {
 try {
   functionThatMightThrow();
 } catch (error) {
-  // One option (more noisy than console.log):
+  // Uma opção (mais chamativa que console.log):
   console.error(error);
-  // Another option:
+  // Outra opção:
   notifyUserOfError(error);
-  // Another option:
+  // Outra opção:
   reportErrorToService(error);
-  // OR do all three!
+  // OU as três!
 }
 ```
 
-### Don't ignore rejected promises
-For the same reason you shouldn't ignore caught errors
-from `try/catch`.
+### Não ignore promessas rejeitadas
+Pela mesma razão que você não deveria ignorar erros
+caputados de `try/catch`
 
 **Ruim:**
 ```javascript
@@ -1662,13 +1662,13 @@ getdata()
   functionThatMightThrow(data);
 })
 .catch((error) => {
-  // One option (more noisy than console.log):
+  // Uma opção (mais chamativa que console.log):
   console.error(error);
-  // Another option:
+  // Outra opção:
   notifyUserOfError(error);
-  // Another option:
+  // Outra opção:
   reportErrorToService(error);
-  // OR do all three!
+  // OU as três!
 });
 ```
 
