@@ -6,7 +6,7 @@
   3. [Funções](#funções)
   4. [Objetos e Estruturas de Dados](#objects-and-data-structures)
   5. [Classes](#classes)
-  6. [Testes](#testing)
+  6. [Testes](#testes)
   7. [Concorrência](#concurrency)
   8. [Tratamento de Erros](#error-handling)
   9. [Formatação](#formatting)
@@ -1472,26 +1472,14 @@ class Employee {
 ```
 **[⬆ voltar ao topo](#table-of-contents)**
 
-## **Testing**
-Testing is more important than shipping. If you have no tests or an
-inadequate amount, then every time you ship code you won't be sure that you
-didn't break anything. Deciding on what constitutes an adequate amount is up
-to your team, but having 100% coverage (all statements and branches) is how
-you achieve very high confidence and developer peace of mind. This means that
-in addition to having a great testing framework, you also need to use a
-[good coverage tool](http://gotwarlost.github.io/istanbul/).
+## **Testes**
+Testes são mais importantes que entregas. Se você não possui testes ou um quantidade inadequada, então toda vez que você entregar seu código você não tera certeza se você não quebrou alguma coisa. Decidir o que constitui uma quantidade adequada é responsabilidade do seu time, mas ter 100% de cobertura (todas as sentenças e branches) é a maneira que se alcança uma alta confiança e uma paz de espirito em desenvolvimento. Isso quer dizer que além de ter um ótimo framework de testes, você também precisa usar uma [noa ferramenta de cobertura](http://gotwarlost.github.io/istanbul/).
 
-There's no excuse to not write tests. There's [plenty of good JS test frameworks]
-(http://jstherightway.org/#testing-tools), so find one that your team prefers.
-When you find one that works for your team, then aim to always write tests
-for every new feature/module you introduce. If your preferred method is
-Test Driven Development (TDD), that is great, but the main point is to just
-make sure you are reaching your coverage goals before launching any feature,
-or refactoring an existing one.
+Não existe desculpa para não escrever testes. Existem [diversos frameworks de testes em JS ótimos](http://jstherightway.org/#testing-tools), então encontre um que seu time prefira. Quando você encontrar um que funciona para seu time, então tenha como objetivo sempre escrever testes para cada nova funcionalidade/módulo que você introduzir. Se seu método preferido for Desenvolvimento Orientado a Testes (TDD), isso é ótimo, mas o ponto principal é apenas ter certeza que você está alcançado suas metas de cobertura antes de lançar qualquer funcionalidade, ou refatorar uma já existente.
 
-### Single concept per test
+### Um conceito por teste
 
-**Bad:**
+**Ruim:**
 ```javascript
 const assert = require('assert');
 
@@ -1514,7 +1502,7 @@ describe('MakeMomentJSGreatAgain', () => {
 });
 ```
 
-**Good**:
+**Bom**:
 ```javascript
 const assert = require('assert');
 
@@ -1538,7 +1526,7 @@ describe('MakeMomentJSGreatAgain', () => {
   });
 });
 ```
-**[⬆ back to top](#table-of-contents)**
+**[⬆ voltar ao topo](#table-of-contents)**
 
 ## **Concurrency**
 ### Use Promises, not callbacks
