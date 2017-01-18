@@ -35,7 +35,7 @@ const yyyymmdstr = moment().format('YYYY/MM/DD');
 
 **Bom:**
 ```javascript
-const yearMonthDay = moment().format('YYYY/MM/DD');
+const currentDate = moment().format('YYYY/MM/DD');
 ```
 **[⬆ voltar ao topo](#Índice)**
 
@@ -59,21 +59,17 @@ Nós leremos mais código do que jamais seremos capazes de escreveremos. É impo
 
 **Ruim:**
 ```javascript
-// Para que diabos serve 86400?
-setTimeout(() => {
-  this.blastOff()
-}, 86400);
+// Para que diabos serve 86400000?
+setTimeout(blastOff, 86400000);
 
 ```
 
 **Bom:**
 ```javascript
 // Declare-as como `const` global em letras maiúsculas.
-const SECONDS_IN_A_DAY = 86400;
+const MILLISECONDS_IN_A_DAY = 86400000;
 
-setTimeout(() => {
-  this.blastOff()
-}, SECONDS_IN_A_DAY);
+setTimeout(blastOff, MILLISECONDS_IN_A_DAY);
 
 ```
 **[⬆ voltar ao topo](#Índice)**
@@ -82,16 +78,16 @@ setTimeout(() => {
 **Ruim:**
 ```javascript
 const address = 'One Infinite Loop, Cupertino 95014';
-const cityStateRegex = /^[^,\\]+[,\\\s]+(.+?)\s*(\d{5})?$/;
-saveCityState(address.match(cityStateRegex)[1], address.match(cityStateRegex)[2]);
+const cityZipCodeRegex = /^[^,\\]+[,\\\s]+(.+?)\s*(\d{5})?$/;
+saveCityZipCode(address.match(cityZipCodeRegex)[1], address.match(cityZipCodeRegex)[2]);
 ```
 
 **Bom:**
 ```javascript
 const address = 'One Infinite Loop, Cupertino 95014';
-const cityStateRegex = /^[^,\\]+[,\\\s]+(.+?)\s*(\d{5})?$/;
-const [, city, state] = address.match(cityStateRegex);
-saveCityState(city, state);
+const cityZipCodeRegex = /^[^,\\]+[,\\\s]+(.+?)\s*(\d{5})?$/;
+const [, city, zipCode] = address.match(cityZipCodeRegex) || [];
+saveCityZipCode(city, zipCode);
 ```
 **[⬆ voltar ao topo](#Índice)**
 
@@ -162,7 +158,7 @@ function paintCar(car) {
 ```javascript
 function createMicrobrewery(name) {
   const breweryName = name || 'Hipster Brew Co.';
-  ...
+  // ...
 }
 
 ```
@@ -170,7 +166,7 @@ function createMicrobrewery(name) {
 **Bom:**
 ```javascript
 function createMicrobrewery(breweryName = 'Hipster Brew Co.') {
-  ...
+  // ...
 }
 
 ```
@@ -193,16 +189,16 @@ function createMenu(title, body, buttonText, cancellable) {
 
 **Bom:**
 ```javascript
-const menuConfig = {
+function createMenu(config) {
+  // ...
+}
+
+createMenu({
   title: 'Foo',
   body: 'Bar',
   buttonText: 'Baz',
   cancellable: true
-};
-
-function createMenu(config) {
-  // ...
-}
+});
 
 ```
 **[⬆ voltar ao topo](#Índice)**
@@ -330,7 +326,14 @@ function parseBetterJSAlternative(code) {
 **[⬆ voltar ao topo](#Índice)**
 
 ### Remova código duplicado
-Absolutamente nunca, nunca, em qualquer circunstância, tenha código duplicado. Não existe motivo para fazer isto e é possivelmente o pior pecado que você pode cometer como um desenvolvedor profissional. Código duplicado quer dizer que existe mais de um lugar onde você deverá alterar algo se precisar mudar alguma lógica. JavaScript possui tipagem fraca, então torna-se fácil ter funções genéricas. Aproveite-se disso! Ferramentas como [jsinspect](https://github.com/danielstjules/jsinspect) podem lhe ajudar a encontrar código duplicado elegível para refatoração.
+Faça absolutamente seu melhor para evitar código duplicado. Código duplicado quer dizer que existe mais de um lugar onde você deverá alterar algo se precisar mudar alguma lógica.
+
+Imagine que você é dono de um restaurante e você toma conta do seu estoque: todos os seus tomates, cebolas, alhos, temperos, etc. Se você tem multiplas listas onde guarda estas informações, então você terá que atualizar todas elas quando servir um prato que tenha tomates. Se você tivesse apenas uma lista, teria apenas um lugar para atualizar!
+
+Freqüentemente, você possui código duplicado porque você tem duas ou mais
+coisas levemente diferentes, que possuem muito em comum, mas suas diferenças lhe forçam a ter mais duas ou três funções que fazem muito das mesmas coisas. Remover código duplicado significa criar uma abstração que seja capaz de lidar com este conjunto de coisas diferentes com apenas uma função/modulo/classe.
+
+Conseguir a abstração correta é crítico, por isso que você deveria seguir os princípios SOLID descritos na seção *Classes*. Abstrações ruins podem ser piores do que código duplicado, então tome cuidado! Dito isto, se você puder fazer uma boa abstração, faça-a! Não repita a si mesmo, caso contrário você se pegará atualizando muitos lugares toda vez que precisar mudar qualquer coisinha.
 
 **Ruim:**
 ```javascript
@@ -340,9 +343,9 @@ function showDeveloperList(developers) {
     const experience = developer.getExperience();
     const githubLink = developer.getGithubLink();
     const data = {
-      expectedSalary: expectedSalary,
-      experience: experience,
-      githubLink: githubLink
+      expectedSalary,
+      experience,
+      githubLink
     };
 
     render(data);
@@ -355,9 +358,9 @@ function showManagerList(managers) {
     const experience = manager.getExperience();
     const portfolio = manager.getMBAProjects();
     const data = {
-      expectedSalary: expectedSalary,
-      experience: experience,
-      portfolio: portfolio
+      expectedSalary,
+      experience,
+      portfolio
     };
 
     render(data);
@@ -379,9 +382,9 @@ function showList(employees) {
     }
 
     const data = {
-      expectedSalary: expectedSalary,
-      experience: experience,
-      portfolio: portfolio
+      expectedSalary,
+      experience,
+      portfolio
     };
 
     render(data);
@@ -406,7 +409,6 @@ function createMenu(config) {
   config.body = config.body || 'Bar';
   config.buttonText = config.buttonText || 'Baz';
   config.cancellable = config.cancellable === undefined ? config.cancellable : true;
-
 }
 
 createMenu(menuConfig);
@@ -464,7 +466,7 @@ function createTempFile(name) {
 ```
 **[⬆ voltar ao topo](#Índice)**
 
-### Evite Efeitos Colaterais
+### Evite Efeitos Colaterais (parte 1)
 Uma função produz um efeito colateral se ela faz alguma coisa que não seja receber um valor de entrada e retornar outro(s) valor(es). Um efeito colateral pode ser escrever em um arquivo, modificar uma variável global, ou acidentalmente transferir todo seu dinheiro para um estranho.
 
 Agora, você precisa de efeitos colaterais ocasionalmente no seu programa. Como no exemplo anterior, você pode precisar escrever em um arquivo. O que você quer fazer é centralizar aonde está fazendo isto. Não tenha diversas funções e classes que escrevam para uma arquivo em particular. Tenha um serviço que faça isso. Um e apenas um.
@@ -500,51 +502,53 @@ console.log(newName); // ['Ryan', 'McDermott'];
 ```
 **[⬆ voltar ao topo](#Índice)**
 
+### Evite Efeitos Colaterais (parte 2)
+Em JavaScript, tipos primitivos são passados por valor e objetos/vetores são passados por referência. No caso de objetos e vetores, se nossa função faz uma mudança em um vetor de um carrinho de compras, por exemplo, adicionando um item para ser comprado, então qualquer outra função que use o vetor `cart` também será afetada por essa adição. Isso pode ser ótimo, mas também pode ser ruim. Vamos imaginar uma situação ruim:
+
+O usuário clica no botão "Comprar", botão que invoca a função `purchase` que dispara uma série de requisições e manda o vetor `cart` para o servidor. Devido a uma conexão ruim de internet, a função `purchase` precisa fazer novamente a requisição. Agora, imagine que nesse meio tempo o usuário acidentalmente clique no botão `Adicionar ao carrinho` em um produto que ele não queria antes da requisição começar. Se isto acontecer e a requisição for enviada novamente, então a função `purchase` irá enviar acidentalmente o vetor com o novo produto adicionado porque existe uma referência para o vetor `cart` que a função `addItemToCart` modificou adicionando um produto indesejado.
+
+Uma ótima solução seria que a função `addCartToItem` sempre clonasse o vetor `cart`, edita-se-o, e então retornasse seu clone. Isso garante que nenhuma outra função que possua uma referência para o carrinho de compras seja afetada por qualquer mudança feita.
+
+Podem haver casos onde você realmente quer mudar o objeto de entrada, mas quando você adota este tipo de programação você vai descobrir que estes casos são bastante raros. A maioria das coisas podem ser refatoradas para não ter efeitos colaterais.
+
+Duas ressalvas desta abordagem:
+
+  1. Podem haver casos onde você realmente quer mudar o objeto de entrada, mas quando você adota este tipo de programação você vai descobrir que estes casos são bastante raros. A maioria das coisas podem ser refatoradas para não terem efeitos colaterais.
+
+  2. Clonar objetos grandes pode ser bastante caro em termos de performance. Com sorte, na prática isso não é um problema, porque existem [https://facebook.github.io/immutable-js/](ótimas bibliotecas) que permitem que este tipo de programação seja rápida e não seja tão intensa no uso de memória quanto seria se você clonasse manualmente objetos e vetores.
+
+
+**Ruim:**
+```javascript
+const addItemToCart = (cart, item) => {
+  cart.push({ item, date: Date.now() });
+};
+```
+
+**Bom:**
+```javascript
+const addItemToCart = (cart, item) => {
+  return [...cart, { item, date : Date.now() }];
+};
+```
+
 ### Não escreva em funções globais
 Poluir globais é uma pratica ruim em JavaScript porque você pode causar conflito com outra biblioteca e o usuário da sua API não faria a menor ideia até que ele tivesse um exceção sendo levantada em produção. Vamos pensar em um exemplo: e se você quisesse estender o método nativo Array do JavaScript para ter um método `diff` que poderia mostrar a diferença entre dois vetores? Você poderia escrever sua nova função em `Array.prototype`, mas poderia colidir com outra biblioteca que tentou fazer a mesma coisa. E se esta outra biblioteca estava apenas usando `diff` para achar a diferença entre o primeiro e último elemento de um vetor? É por isso que seria muito melhor usar as classes padrões do ES2015/ES6 e apenas estender o `Array` global.
 
 **Ruim:**
 ```javascript
 Array.prototype.diff = function diff(comparisonArray) {
-  const values = [];
-  const hash = {};
-
-  for (const i of comparisonArray) {
-    hash[i] = true;
-  }
-
-  for (const i of this) {
-    if (!hash[i]) {
-      values.push(i);
-    }
-  }
-
-  return values;
+  const hash = new Set(comparisonArray);
+  return this.filter(elem => !hash.has(elem));
 };
 ```
 
 **Bom:**
 ```javascript
 class SuperArray extends Array {
-  constructor(...args) {
-    super(...args);
-  }
-
   diff(comparisonArray) {
-    const values = [];
-    const hash = {};
-
-    for (const i of comparisonArray) {
-      hash[i] = true;
-    }
-
-    for (const i of this) {
-      if (!hash[i]) {
-        values.push(i);
-      }
-    }
-
-    return values;
+    const hash = new Set(comparisonArray);
+    return this.filter(elem => !hash.has(elem));
   }
 }
 ```
@@ -941,37 +945,84 @@ class UserSettings {
 **[⬆ voltar ao topo](#Índice)**
 
 ### Princípio do Aberto/Fechado (OCP)
-Como foi dito por Bertrand Meyer, "entidades de software (classes, módulos, funções, etc.) devem se manter abertas para extensões, mas fechadas para modificações." Mas o que isso significa? Esse principio basicamente diz que você deve permitir que usuários estendam as funcionalidades do seu módulo sem ter que abrir o arquivo de código fonte `.js` e manipulá-lo manualmente.
+Como foi dito por Bertrand Meyer, "entidades de software (classes, módulos, funções, etc.) devem se manter abertas para extensões, mas fechadas para modificações." Mas o que isso significa? Esse principio basicamente diz que você deve permitir que usuários adicionem novas funcionalidades sem mudar códigó já existente.
 
 **Ruim:**
 ```javascript
-class AjaxRequester {
+class AjaxAdapter extends Adapter {
   constructor() {
-    // E se nós quiséssemos outro método HTTP, como DELETE? Nós teríamos que
-    // abrir esse arquivo e modificar o this para colocá-lo manualmente.
-    this.HTTP_METHODS = ['POST', 'PUT', 'GET'];
+    super();
+    this.name = 'ajaxAdapter';
+  }
+}
+
+class NodeAdapter extends Adapter {
+  constructor() {
+    super();
+    this.name = 'nodeAdapter';
+  }
+}
+
+class HttpRequester {
+  constructor(adapter) {
+    this.adapter = adapter;
   }
 
-  get(url) {
-    // ...
+  fetch(url) {
+    if (this.adapter.name === 'ajaxAdapter') {
+      return makeAjaxCall(url).then((response) => {
+        // transforma a resposta e retorna
+      });
+    } else if (this.adapter.name === 'httpNodeAdapter') {
+      return makeHttpCall(url).then((response) => {
+        // transforma a resposta e retorna
+      });
+    }
   }
+}
 
+function makeAjaxCall(url) {
+  // faz a request e retorna a promessa
+}
+
+function makeHttpCall(url) {
+  // faz a request e retorna a promessa
 }
 ```
 
 **Bom:**
 ```javascript
-class AjaxRequester {
+class AjaxAdapter extends Adapter {
   constructor() {
-    this.HTTP_METHODS = ['POST', 'PUT', 'GET'];
+    super();
+    this.name = 'ajaxAdapter';
   }
 
-  get(url) {
-    // ...
+  request(url) {
+    // faz a request e retorna a promessa
+  }
+}
+
+class NodeAdapter extends Adapter {
+  constructor() {
+    super();
+    this.name = 'nodeAdapter';
   }
 
-  addHTTPMethod(method) {
-    this.HTTP_METHODS.push(method);
+  request(url) {
+    // faz a request e retorna a promessa
+  }
+}
+
+class HttpRequester {
+  constructor(adapter) {
+    this.adapter = adapter;
+  }
+
+  fetch(url) {
+    return this.adapter.request(url).then((response) => {
+      // transforma a resposta e retorna
+    });
   }
 }
 ```
@@ -1013,10 +1064,6 @@ class Rectangle {
 }
 
 class Square extends Rectangle {
-  constructor() {
-    super();
-  }
-
   setWidth(width) {
     this.width = width;
     this.height = width;
@@ -1044,8 +1091,6 @@ renderLargeRectangles(rectangles);
 **Bom:**
 ```javascript
 class Shape {
-  constructor() {}
-
   setColor(color) {
     // ...
   }
@@ -1335,9 +1380,7 @@ class Human extends Mammal {
 
 
 ### Use encadeamento de métodos
-Indo contra um conselho de Código Limpo, aqui é a ocasião onde teremos que divergir.
-Foi argumentado que o encadeamento de métodos não é claro e que viola a [Lei de Demeter](https://en.wikipedia.org/wiki/Law_of_Demeter).
-Talvez seja verdade, mas esse padrão é muito útil em JavaScript e você o vera em muitas bibliotecas como jQuery e Lodash. Ele permite que seu código seja expressivo e menos verboso. Por esse motivo, eu digo, use encadeamento de métodos e dê uma olhada em como o seu código ficará mais limpo. Em suas funções de classes, apenas retorne `this` no final de cada função, e você poderá encadear mais métodos de classe nele.
+Este padrão é muito útil em JavaScript e você o vera em muitas bibliotecas como jQuery e Lodash. Ele permite que seu código seja expressivo e menos verboso. Por esse motivo, eu digo, use encadeamento de métodos e dê uma olhada em como o seu código ficará mais limpo. Em suas funções de classes, apenas retorne `this` no final de cada função, e você poderá encadear mais métodos de classe nele.
 
 **Ruim:**
 ```javascript
@@ -1419,7 +1462,7 @@ Como dito famosamente em  [*Padrão de projeto*](https://pt.wikipedia.org/wiki/P
 
 Você deve estar pensando então, "quando eu deveria usar herança?" Isso depende especificamente do seu problema, mas essa é uma lista decente de quando herança faz mais sentido que composição:
 
-1. Sua herança representa uma relação de "isto-é" e não uma relação de "isto-tem" (Animal→Human vs. User->UserDetails)
+1. Sua herança representa uma relação de "isto-é" e não uma relação de "isto-tem" (Human→Animal vs. User->UserDetails)
 2. Você pode reutilizar código de classes de base (Humanos podem se mover como todos os animais).
 3. Você quer fazer mudanças globais para classes derivadas mudando apenas a classe base. (Mudar o custo calórico para todos os animais quando se movem).
 
@@ -1461,7 +1504,6 @@ class Employee {
   constructor(name, email) {
     this.name = name;
     this.email = email;
-
   }
 
   setTaxData(ssn, salary) {
@@ -1588,11 +1630,8 @@ require('request-promise').get('https://en.wikipedia.org/wiki/Robert_Cecil_Marti
 ```javascript
 async function getCleanCodeArticle() {
   try {
-    const request = await require('request-promise');
-    const response = await request.get('https://en.wikipedia.org/wiki/Robert_Cecil_Martin');
-    const fileHandle = await require('fs-promise');
-
-    await fileHandle.writeFile('article.html', response);
+    const response = await require('request-promise').get('https://en.wikipedia.org/wiki/Robert_Cecil_Martin');
+    await require('fs-promise').writeFile('article.html', response);
     console.log('File written');
   } catch(err) {
     console.error(err);
@@ -1740,7 +1779,7 @@ class PerformanceReview {
     return db.lookup(this.employee, 'peers');
   }
 
-  lookupMananger() {
+  lookupManager() {
     return db.lookup(this.employee, 'manager');
   }
 
@@ -1794,7 +1833,7 @@ class PerformanceReview {
     const manager = this.lookupManager();
   }
 
-  lookupMananger() {
+  lookupManager() {
     return db.lookup(this.employee, 'manager');
   }
 
