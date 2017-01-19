@@ -1,4 +1,4 @@
-Original Repository: [ryanmcdermott/clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript)
+Repositório original: [ryanmcdermott/clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript)
 
 # clean-code-javascript
 
@@ -13,6 +13,7 @@ Original Repository: [ryanmcdermott/clean-code-javascript](https://github.com/ry
   8. [Tratamento de Erros](#tratamento-de-erros)
   9. [Formatação](#formatação)
   10. [Comentários](#comentários)
+  11. [Traduções](#traduções)
 
 ## Introdução
 ![Imagem humorística da estimativa de qualidade do software baseado na contagem de quantos palavrões você gritou enquanto lia o código.](http://www.osnews.com/images/comics/wtfm.jpg)
@@ -1971,3 +1972,11 @@ const actions = function() {
 };
 ```
 **[⬆ voltar ao topo](#Índice)**
+
+## **Traduções**
+
+Existem traduções disponíveis em outras linguas:
+
+  - ![de](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Germany.png) **Alemão**: [marcbruederlin/clean-code-javascript](https://github.com/marcbruederlin/clean-code-javascript)
+  - ![cn](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/China.png) **Chinês**: [alivebao/clean-code-js](https://github.com/alivebao/clean-code-js)
+  - ![kr](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/South-Korea.png) **Coreiano**: [qkraudghgh/clean-code-javascript-ko](https://github.com/qkraudghgh/clean-code-javascript-ko)
