@@ -1,3 +1,5 @@
+Repositório original: [ryanmcdermott/clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript)
+
 # clean-code-javascript
 
 ## Índice
@@ -11,6 +13,7 @@
   8. [Tratamento de Erros](#tratamento-de-erros)
   9. [Formatação](#formatação)
   10. [Comentários](#comentários)
+  11. [Traduções](#traduções)
 
 ## Introdução
 ![Imagem humorística da estimativa de qualidade do software baseado na contagem de quantos palavrões você gritou enquanto lia o código.](http://www.osnews.com/images/comics/wtfm.jpg)
@@ -21,7 +24,7 @@ adaptados para JavaScript. Isto não é um guia de estilos. É um guia para se p
 
 Nem todo princípio demonstrado deve ser seguido rigorosamente, e ainda menos são os que possuem consenso universal. São orientações e nada mais, entretanto, foram usadas em código durante muitos anos de experiencia coletiva pelos autores de *Código limpo*.
 
-Nosso oficio de engenharia de software tem pouco mais de 50 anos, e ainda estamos aprendendo muito. Quando a arquitetura de software for tão velha quando a própria arquitetura, talvez então tenhamos regras mais rígidas para seguir. Por enquanto, deixe que estas orientações sirvam como critério para se avaliar a qualidade de código JavaScript que tanto você e o seu time produzirem.
+Nosso ofício de engenharia de software tem pouco mais de 50 anos e ainda estamos aprendendo muito. Quando a arquitetura de software for tão velha quando a própria arquitetura, talvez então tenhamos regras mais rígidas para seguir. Por enquanto, deixe que estas orientações sirvam como critério para se avaliar a qualidade de código JavaScript que tanto você e o seu time produzirem.
 
 Mais uma coisa: aprender isto não irá lhe transformar imediatamente em um desenvolvedor de software melhor e trabalhar com eles por muitos anos não quer dizer que você não cometerá erros. Toda porção de código começa com um rascunho, como argila molhada sendo moldada em sua forma final. Finalmente, talhamos as imperfeições quando revisamos com nossos colegas. Não se bata pelos primeiros rascunhos que ainda precisam de melhorias. Ao invés, bata em seu código.
 
@@ -1992,3 +1995,11 @@ const actions = function() {
 };
 ```
 **[⬆ voltar ao topo](#Índice)**
+
+## **Traduções**
+
+Existem traduções disponíveis em outras linguas:
+
+  - ![de](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Germany.png) **Alemão**: [marcbruederlin/clean-code-javascript](https://github.com/marcbruederlin/clean-code-javascript)
+  - ![cn](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/China.png) **Chinês**: [alivebao/clean-code-js](https://github.com/alivebao/clean-code-js)
+  - ![kr](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/South-Korea.png) **Coreiano**: [qkraudghgh/clean-code-javascript-ko](https://github.com/qkraudghgh/clean-code-javascript-ko)
