@@ -22,11 +22,11 @@ Princípios da Engenharia de Software, do livro de Robert C. Martin
 [*Código Limpo*](https://www.amazon.com.br/C%C3%B3digo-Limpo-Habilidades-Pr%C3%A1ticas-Software/dp/8576082675),
 adaptados para JavaScript. Isto não é um guia de estilos. É um guia para se produzir código legível, reutilizável e refatorável em JavaScript.
 
-Nem todo principio demonstrado deve ser seguido rigorosamente, e ainda menos são os que possuem consenso universal. São orientações e nada mais, entretanto, foram usadas em código durante muitos anos de experiencia coletiva pelos autores de *Código limpo*.
+Nem todo princípio demonstrado deve ser seguido rigorosamente, e ainda menos são os que possuem consenso universal. São orientações e nada mais, entretanto, foram usadas em código durante muitos anos de experiencia coletiva pelos autores de *Código limpo*.
 
 Nosso ofício de engenharia de software tem pouco mais de 50 anos e ainda estamos aprendendo muito. Quando a arquitetura de software for tão velha quando a própria arquitetura, talvez então tenhamos regras mais rígidas para seguir. Por enquanto, deixe que estas orientações sirvam como critério para se avaliar a qualidade de código JavaScript que tanto você e o seu time produzirem.
 
-Mais uma coisa: aprender isto não irá lhe transformar imediatamente em um desenvolvedor de software melhor e trabalhar com eles por muitos anos não quer dizer que você não cometerá erros. Toda porcão de código começa com um rascunho, como argila molhada sendo moldada em sua forma final. Finalmente, talhamos as imperfeições quando revisamos com nossos colegas. Não se bata pelos primeiros rascunhos que ainda precisam de melhorias. Ao invés, bata em seu código.
+Mais uma coisa: aprender isto não irá lhe transformar imediatamente em um desenvolvedor de software melhor e trabalhar com eles por muitos anos não quer dizer que você não cometerá erros. Toda porção de código começa com um rascunho, como argila molhada sendo moldada em sua forma final. Finalmente, talhamos as imperfeições quando revisamos com nossos colegas. Não se bata pelos primeiros rascunhos que ainda precisam de melhorias. Ao invés, bata em seu código.
 
 ## **Variáveis**
 ### Use nomes de variáveis que tenham significado e sejam pronunciáveis
@@ -333,8 +333,8 @@ Faça absolutamente seu melhor para evitar código duplicado. Código duplicado 
 
 Imagine que você é dono de um restaurante e você toma conta do seu estoque: todos os seus tomates, cebolas, alhos, temperos, etc. Se você tem multiplas listas onde guarda estas informações, então você terá que atualizar todas elas quando servir um prato que tenha tomates. Se você tivesse apenas uma lista, teria apenas um lugar para atualizar!
 
-Freqüentemente, você possui código duplicado porque você tem duas ou mais
-coisas levemente diferentes, que possuem muito em comum, mas suas diferenças lhe forçam a ter mais duas ou três funções que fazem muito das mesmas coisas. Remover código duplicado significa criar uma abstração que seja capaz de lidar com este conjunto de coisas diferentes com apenas uma função/modulo/classe.
+Frequentemente, você possui código duplicado porque você tem duas ou mais
+coisas levemente diferentes, que possuem muito em comum, mas suas diferenças lhe forçam a ter mais duas ou três funções que fazem muito das mesmas coisas. Remover código duplicado significa criar uma abstração que seja capaz de lidar com este conjunto de coisas diferentes com apenas uma função/módulo/classe.
 
 Conseguir a abstração correta é crítico, por isso que você deveria seguir os princípios SOLID descritos na seção *Classes*. Abstrações ruins podem ser piores do que código duplicado, então tome cuidado! Dito isto, se você puder fazer uma boa abstração, faça-a! Não repita a si mesmo, caso contrário você se pegará atualizando muitos lugares toda vez que precisar mudar qualquer coisinha.
 
@@ -511,8 +511,6 @@ Em JavaScript, tipos primitivos são passados por valor e objetos/vetores são p
 O usuário clica no botão "Comprar", botão que invoca a função `purchase` que dispara uma série de requisições e manda o vetor `cart` para o servidor. Devido a uma conexão ruim de internet, a função `purchase` precisa fazer novamente a requisição. Agora, imagine que nesse meio tempo o usuário acidentalmente clique no botão `Adicionar ao carrinho` em um produto que ele não queria antes da requisição começar. Se isto acontecer e a requisição for enviada novamente, então a função `purchase` irá enviar acidentalmente o vetor com o novo produto adicionado porque existe uma referência para o vetor `cart` que a função `addItemToCart` modificou adicionando um produto indesejado.
 
 Uma ótima solução seria que a função `addCartToItem` sempre clonasse o vetor `cart`, edita-se-o, e então retornasse seu clone. Isso garante que nenhuma outra função que possua uma referência para o carrinho de compras seja afetada por qualquer mudança feita.
-
-Podem haver casos onde você realmente quer mudar o objeto de entrada, mas quando você adota este tipo de programação você vai descobrir que estes casos são bastante raros. A maioria das coisas podem ser refatoradas para não ter efeitos colaterais.
 
 Duas ressalvas desta abordagem:
 
@@ -750,7 +748,7 @@ function combine(val1, val2) {
 **[⬆ voltar ao topo](#Índice)**
 
 ### Não otimize demais
-Navegadores modernos fazem muitas otimizações por debaixo dos panos em tempo de execução. Muitas vezes, se você estiver otimizando esta apenas perdendo o seu tempo. [Existem bons recursos](https://github.com/petkaantonov/bluebird/wiki/Optimization-killers) para se verificar onde falta otimização. Foque nesses por enquanto, até que	eles sejam concertados caso seja possível.
+Navegadores modernos fazem muitas otimizações por debaixo dos panos em tempo de execução. Muitas vezes, se você estiver otimizando esta apenas perdendo o seu tempo. [Existem bons recursos](https://github.com/petkaantonov/bluebird/wiki/Optimization-killers) para se verificar onde falta otimização. Foque nesses por enquanto, até que eles sejam consertados caso seja possível.
 
 **Ruim:**
 ```javascript
@@ -897,7 +895,7 @@ console.log(`Employee name: ${employee.getName()}`); // Employee name: John Doe
 
 
 ## **Classes**
-### Principio da Responsabilidade Única (SRP)
+### Princípio da Responsabilidade Única (SRP)
 Como dito em Código Limpo, "Nunca deveria haver mais de um motivo para uma classe ter que mudar". É tentador empacotar uma classe em excesso com muitas funcionalidades, como quando você pode levar apenas uma mala em seu voo. O problema com isso é que sua classe não sserá conceitualmente coesa e lhe dará diversos motivos para mudá-la. Minimizar o número de vezes que você precisa mudar uma classe é importante. É importante porque se muitas funcionalidades estão em uma classe e você mudar uma porção dela, pode ser difícil entender como isto afetará outras módulos que dependem dela no seu código.
 
 **Ruim:**
@@ -948,7 +946,7 @@ class UserSettings {
 **[⬆ voltar ao topo](#Índice)**
 
 ### Princípio do Aberto/Fechado (OCP)
-Como foi dito por Bertrand Meyer, "entidades de software (classes, módulos, funções, etc.) devem se manter abertas para extensões, mas fechadas para modificações." Mas o que isso significa? Esse principio basicamente diz que você deve permitir que usuários adicionem novas funcionalidades sem mudar códigó já existente.
+Como foi dito por Bertrand Meyer, "entidades de software (classes, módulos, funções, etc.) devem se manter abertas para extensões, mas fechadas para modificações." Mas o que isso significa? Esse princípio basicamente diz que você deve permitir que usuários adicionem novas funcionalidades sem mudar códigó já existente.
 
 **Ruim:**
 ```javascript
@@ -1160,11 +1158,11 @@ renderLargeShapes(shapes);
 **[⬆ voltar ao topo](#Índice)**
 
 ### Princípio da Segregação de Interface (ISP)
-JavaScript não possui interfaces então esse principio não se aplica estritamente como os outros. Entretanto, é importante e relevante até mesmo com a falta de um sistema de tipos em JavaScript.
+JavaScript não possui interfaces então esse princípio não se aplica estritamente como os outros. Entretanto, é importante e relevante até mesmo com a falta de um sistema de tipos em JavaScript.
 
-ISP diz que "Clientes não deve ser forcados a depender de interfaces que eles não usam." Interfaces são contratos implícitos em JavaScript devido a sua tipagem pato (duck typing).
+ISP diz que "Clientes não devem ser forcados a depender de interfaces que eles não usam." Interfaces são contratos implícitos em JavaScript devido a sua tipagem pato (duck typing).
 
-Um bom exemplo para se observar que demonstra esse principio em JavaScript é de classes que requerem objetos de configurações grandes. Não pedir para clientes definirem grandes quantidades de opções é benéfico, porque na maioria das vezes eles não precisarão de todas as configurações. Torná-las opcionais ajuda a prevenir uma “interferência gorda”.
+Um bom exemplo para se observar que demonstra esse princípio em JavaScript é de classes que requerem objetos de configurações grandes. Não pedir para clientes definirem grandes quantidades de opções é benéfico, porque na maioria das vezes eles não precisarão de todas as configurações. Torná-las opcionais ajuda a prevenir uma “interferência gorda”.
 
 **Ruim:**
 ```javascript
@@ -1227,13 +1225,13 @@ const $ = new DOMTraverser({
 **[⬆ voltar ao topo](#Índice)**
 
 ### Princípio da Inversão de Dependência  (DIP)
-Este principio nos diz duas coisas essenciais:
+Este princípio nos diz duas coisas essenciais:
 1. Módulos de alto nível não devem depender de módulos de baixo nível. Ambos devem depender de abstrações.
 2. Abstrações não devem depender de detalhes. Detalhes devem depender de abstrações.
 
-Isso pode ser difícil de entender a principio, mas se você já trabalhou com Angular.js, você já viu uma implementação deste principio na forma de injeção de dependência (DI). Apesar de não serem conceitos idênticos, DIP não deixa módulos de alto nível saber os detalhes de seus módulos de baixo nível, assim como configurá-los. Isso pode ser alcançado através de DI. Um grande beneficio é que reduz o acoplamento entre os módulos. Acoplamento é um padrão de desenvolvimento muito ruim porque torna seu código mais difícil de ser refatorado.
+Isso pode ser difícil de entender a princípio, mas se você já trabalhou com Angular.js, você já viu uma implementação deste princípio na forma de injeção de dependência (DI). Apesar de não serem conceitos idênticos, DIP não deixa módulos de alto nível saber os detalhes de seus módulos de baixo nível, assim como configurá-los. Isso pode ser alcançado através de DI. Um grande beneficio é que reduz o acoplamento entre os módulos. Acoplamento é um padrão de desenvolvimento muito ruim porque torna seu código mais difícil de ser refatorado.
 
-Como dito anteriormente, JavaScript não possui interfaces, então as abstrações que são necessárias são contratos implícitos. Que quer dizer que, os métodos e as classes que um objeto/classe expõe para outros objeto/classe. No exemplo abaixo, o contrato implícito é que qualquer modulo de Request  para `InventoryTracker` terá um método `requestItems`:
+Como dito anteriormente, JavaScript não possui interfaces, então as abstrações que são necessárias são contratos implícitos. Que quer dizer que, os métodos e as classes que um objeto/classe expõe para outros objeto/classe. No exemplo abaixo, o contrato implícito é que qualquer módulo de Request  para `InventoryTracker` terá um método `requestItems`:
 
 **Ruim:**
 ```javascript
@@ -1303,7 +1301,7 @@ class InventoryRequesterV2 {
 }
 
 // Construindo nossas dependências externamente e injetando-as, podemos facilmente
-// substituir nosso modulo de request por um novo mais chique que usa WebSockets
+// substituir nosso módulo de request por um novo mais chique que usa WebSockets
 const inventoryTracker = new InventoryTracker(['apples', 'bananas'], new InventoryRequesterV2());
 inventoryTracker.requestItems();
 ```
@@ -1383,7 +1381,7 @@ class Human extends Mammal {
 
 
 ### Use encadeamento de métodos
-Este padrão é muito útil em JavaScript e você o vera em muitas bibliotecas como jQuery e Lodash. Ele permite que seu código seja expressivo e menos verboso. Por esse motivo, eu digo, use encadeamento de métodos e dê uma olhada em como o seu código ficará mais limpo. Em suas funções de classes, apenas retorne `this` no final de cada função, e você poderá encadear mais métodos de classe nele.
+Este padrão é muito útil em JavaScript e você o verá em muitas bibliotecas como jQuery e Lodash. Ele permite que seu código seja expressivo e menos verboso. Por esse motivo, eu digo, use encadeamento de métodos e dê uma olhada em como o seu código ficará mais limpo. Em suas funções de classes, apenas retorne `this` no final de cada função, e você poderá encadear mais métodos de classe nele.
 
 **Ruim:**
 ```javascript
@@ -1461,7 +1459,7 @@ const car = new Car()
 **[⬆ voltar ao topo](#Índice)**
 
 ### Prefira composição ao invés de herança
-Como dito famosamente em  [*Padrão de projeto*](https://pt.wikipedia.org/wiki/Padr%C3%A3o_de_projeto_de_software) pela Guangue dos Quatro, você deve preferir composição sobre herança onde você puder. Existem muitas boas razoes para usar herança e muitas boas razoes para se usar composição. O ponto principal para essa máxima é que se sua mente for instintivamente para a herança, tente pensar se composição poderia modelar melhor o seu problema. Em alguns casos pode.
+Como dito famosamente em [*Padrão de projeto*](https://pt.wikipedia.org/wiki/Padr%C3%A3o_de_projeto_de_software) pela Guangue dos Quatro, você deve preferir composição sobre herança onde você puder. Existem muitas boas razões para usar herança e muitas boas razões para se usar composição. O ponto principal para essa máxima é que se sua mente for instintivamente para a herança, tente pensar se composição poderia modelar melhor o seu problema. Em alguns casos pode.
 
 Você deve estar pensando então, "quando eu deveria usar herança?" Isso depende especificamente do seu problema, mas essa é uma lista decente de quando herança faz mais sentido que composição:
 
@@ -1648,10 +1646,10 @@ async function getCleanCodeArticle() {
 `throw error` é uma coisa boa! Eles significam que o programa identificou
 com sucesso quando algo no deu errado e está permitindo que você saiba parando
 a execução da função no processo atual, fechando o processo (em Node), e
-notificando você no console com a pilha processos.
+notificando você no console com a pilha de processos.
 
 ### Não ignore erros capturados
-No fazer nada com um erro capturado no te dá a habilidade de resolve-lo ou
+Não fazer nada com um erro capturado não te dá a habilidade de resolvê-lo ou
 reagir ao erro informado. Exibir um log no console(`console.log`) não é muito
 melhor porque muitas vezes ele pode ficar perdido entre um monte de outras
 coisas impressas no console. Se você envolver qualquer pedaço de código em um
@@ -1767,8 +1765,8 @@ class Alpaca {}
 
 ### Funções e chamadas de funções devem estar próximas
 Se uma função chamar outra, mantenha estas funções verticalmente próximas no arquivo
-fonte. Em um cenário ideal, manter a chamada logo assima da função. Nós tendemos a
-ler códigos de cima para baixo, como um jornal. Por causa disso, faça o seu código
+fonte. Em um cenário ideal, manter a chamada logo acima da função. Nós tendemos a
+ler códigos de cima para baixo, como num jornal. Por causa disso, faça o seu código
 desta maneira.
 
 **Ruim:**
@@ -1940,7 +1938,7 @@ function combine(a, b) {
 
 ### Evite marcadores de posição
 Eles geralmente criam ruídos. Deixe que as funções e nomes de variáveis em conjunto
-com a devida identação e formatação dar a estrutura visual para o seu código.
+com a devida identação e formatação deem a estrutura visual para o seu código.
 
 **Ruim:**
 ```javascript
