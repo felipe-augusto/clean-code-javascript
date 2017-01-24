@@ -58,7 +58,7 @@ getUser();
 **[⬆ voltar ao topo](#Índice)**
 
 ### Use nomes pesquisáveis
-Nós leremos mais código do que jamais seremos capazes de escreveremos. É importante que o código que escrevemos seja legível e pesquisável. *Não* dando nomes em variáveis que sejam significativos para entender nosso programa, machucamos nossos leitores. Torne seus nomes pesquisáveis. Ferramentas como [buddy.js](https://github.com/danielstjules/buddy.js) e [ESLint](https://github.com/eslint/eslint/blob/660e0918933e6e7fede26bc675a0763a6b357c94/docs/rules/no-magic-numbers.md) podem ajudar a identificar constantes sem nome.
+Nós iremos ler mais código que escrever. É importante que o código que escrevemos seja legível e pesquisável. *Não* dando nomes em variáveis que sejam significativos para entender nosso programa, machucamos nossos leitores. Torne seus nomes pesquisáveis. Ferramentas como [buddy.js](https://github.com/danielstjules/buddy.js) e [ESLint](https://github.com/eslint/eslint/blob/660e0918933e6e7fede26bc675a0763a6b357c94/docs/rules/no-magic-numbers.md) podem ajudar a identificar constantes sem nome.
 
 **Ruim:**
 ```javascript
@@ -1727,7 +1727,7 @@ aspas simples vs. duplas, etc.) olhe aqui para alguma orientação.
 
 ### Utilize capitalização consistente
 JavaScript não é uma linguagem tipada, então a capitalização diz muito sobre
-suas variáveis, funções, etc. Estas regras são subjetivas, então sua equipe 
+suas variáveis, funções, etc. Estas regras são subjetivas, então sua equipe
 pode escolher o que quiserem. O ponto é, não importa o que vocês todos escolham,
 apenas seja consistente.
 
