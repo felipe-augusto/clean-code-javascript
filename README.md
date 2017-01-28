@@ -155,7 +155,9 @@ function paintCar(car) {
 ```
 **[⬆ voltar ao topo](#Índice)**
 
-### Use argumentos padrões ao invés de curto circuitar ou condicionais
+### Use argumentos padrões ao invés de curto circuitar ou usar condicionais
+
+Argumento padrões são geralmente mais limpos do que curto circuitos. Esteja ciente que se você usá-los, sua função apenas irá fornecer valores padrões para argumentos `undefined`. Outros valores "falsos" como `''`, `""`, `false`, `null`, `0`, e `NaN`, não serão substituidos por valores padrões.
 
 **Ruim:**
 ```javascript
@@ -179,9 +181,16 @@ function createMicrobrewery(breweryName = 'Hipster Brew Co.') {
 ### Argumentos de funções (idealmente 2 ou menos)
 Limitar a quantidade de parâmetros de uma função é incrivelmente importante porque torna mais fácil testá-la. Ter mais que três leva a uma explosão combinatória onde você tem que testar muitos casos diferentes com cada argumento separadamente.
 
-Nenhum argumento é o caso ideal. Um ou dois argumentos é bom, e três deve ser evitado. Qualquer coisa a mais que isso deve ser consolidado. Geralmente, se você tem mais que dois argumentos então sua função esta tentando fazer muitas coisas. Nos casos em que não esta, na maioria das vezes um objeto é suficiente como argumento.
+Um ou dois argumentos é o caso ideal, e três devem ser evitados se possível. Qualquer coisa a mais que isso deve ser consolidado. Geralmente, se você tem mais que dois argumentos então sua função esta tentando fazer muitas coisas. Nos casos em que não esta, na maioria das vezes um objeto é suficiente como argumento.
 
-Já que JavaScript nos permite criar objetos instantaneamente, sem ter que escrever muita coisa, você pode usar um objeto se você se pegar precisando usar muitos argumentos.
+Já que JavaScript lhe permite criar objetos instantaneamente, sem ter que escrever muita coisa, você pode usar um objeto se você se pegar precisando usar muitos argumentos.
+
+Para tornar mais óbvio quais as propriedades que as funções esperam, você pode usar a sintaxe de desestruturação (destructuring) do ES6. Ela possui algumas vantagens:
+
+
+1. Quando alguém olha para a assinatura de uma função, fica imediatamente claro quais propriedades são usadas.
+2. Desestruturação também clona os valores primitivos específicos do objeto passado como argumento para a função. Isso pode ajudar a evitar efeitos colaterais. Nota: objetos e vetores que são desestruturados a partir do objeto passado por argumento NÃO são clonados.
+3. Linters podem te alertar sobre propriedades não utilizadas, o que seria impossível sem usar desestruturação.
 
 **Ruim:**
 ```javascript
@@ -192,7 +201,7 @@ function createMenu(title, body, buttonText, cancellable) {
 
 **Bom:**
 ```javascript
-function createMenu(config) {
+function createMenu({ title, body, buttonText, cancellable }) {
   // ...
 }
 
@@ -373,7 +382,7 @@ function showManagerList(managers) {
 
 **Bom:**
 ```javascript
-function showList(employees) {
+function showEmployeeList(employees) {
   employees.forEach((employee) => {
     const expectedSalary = employee.calculateExpectedSalary();
     const experience = employee.getExperience();
@@ -601,11 +610,13 @@ const programmerOutput = [
   }
 ];
 
+const INITIAL_VALUE = 0;
+
 const totalOutput = programmerOutput
   .map((programmer) => programmer.linesOfCode)
-  .reduce((acc, linesOfCode) => acc + linesOfCode, 0);
+  .reduce((acc, linesOfCode) => acc + linesOfCode, INITIAL_VALUE);
 ```
-**[⬆ volta ao topo](#table-of-contents)**
+**[⬆ volta ao topo](#Índice)**
 
 ### Encapsule condicionais
 
@@ -709,7 +720,7 @@ JavaScript não possui tipos, o que significa que suas funções podem receber q
 ```javascript
 function travelToTexas(vehicle) {
   if (vehicle instanceof Bicycle) {
-    vehicle.peddle(this.currentLocation, new Location('texas'));
+    vehicle.pedal(this.currentLocation, new Location('texas'));
   } else if (vehicle instanceof Car) {
     vehicle.drive(this.currentLocation, new Location('texas'));
   }
@@ -832,7 +843,7 @@ class BankAccount {
 
   // Não precisa ter como prefixo `get` ou `set` para ser um getter/setter
   set balance(amount) {
-    if (verifyIfAmountCanBeSetted(amount)) {
+    if (this.verifyIfAmountCanBeSetted(amount)) {
       this._balance = amount;
     }
   }
@@ -880,13 +891,15 @@ console.log(`Employee name: ${employee.getName()}`); // Employee name: undefined
 
 **Bom:**
 ```javascript
-const Employee = function (name) {
-  this.getName = function getName() {
-    return name;
+function makeEmployee(name) {
+  return {
+    getName() {
+      return name;
+    },
   };
-};
+}
 
-const employee = new Employee('John Doe');
+const employee = makeEmployee('John Doe');
 console.log(`Employee name: ${employee.getName()}`); // Employee name: John Doe
 delete employee.name;
 console.log(`Employee name: ${employee.getName()}`); // Employee name: John Doe
@@ -1532,7 +1545,7 @@ describe('MakeMomentJSGreatAgain', () => {
 
     date = new MakeMomentJSGreatAgain('1/1/2015');
     date.addDays(30);
-    date.shouldEqual('1/31/2015');
+    assert.equal('1/31/2015', date);
 
     date = new MakeMomentJSGreatAgain('2/1/2016');
     date.addDays(28);
@@ -1553,7 +1566,7 @@ describe('MakeMomentJSGreatAgain', () => {
   it('handles 30-day months', () => {
     const date = new MakeMomentJSGreatAgain('1/1/2015');
     date.addDays(30);
-    date.shouldEqual('1/31/2015');
+    assert.equal('1/31/2015', date);
   });
 
   it('handles leap year', () => {
@@ -1978,3 +1991,4 @@ Existem traduções disponíveis em outras linguas:
   - ![de](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Germany.png) **Alemão**: [marcbruederlin/clean-code-javascript](https://github.com/marcbruederlin/clean-code-javascript)
   - ![cn](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/China.png) **Chinês**: [alivebao/clean-code-js](https://github.com/alivebao/clean-code-js)
   - ![kr](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/South-Korea.png) **Coreiano**: [qkraudghgh/clean-code-javascript-ko](https://github.com/qkraudghgh/clean-code-javascript-ko)
+  - ![ru](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Russia.png) **Russo**: [BoryaMogila/clean-code-javascript-ru/](https://github.com/BoryaMogila/clean-code-javascript-ru/)
