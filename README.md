@@ -272,7 +272,7 @@ addMonthToDate(1, date);
 **[⬆ voltar ao topo](#Índice)**
 
 ### Funções devem ter apenas um nível de abstração
-Quando você tem mais de um nível de abstração sua função provavelmente esta fazendo coisas demais. Dividir suas funções leva a reutilização e teste mais fáceis.
+Quando você tem mais de um nível de abstração sua função provavelmente esta fazendo coisas demais. Dividir suas funções leva a reutilização e testes mais fáceis.
 
 **Ruim:**
 ```javascript
