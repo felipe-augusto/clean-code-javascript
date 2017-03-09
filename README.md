@@ -126,7 +126,7 @@ locations.forEach((location) => {
 **[⬆ voltar ao topo](#Índice)**
 
 ### Não adicione contextos desnecessários
-Se o nome de sua classe/objeto já lhe diz alguma coisa, não as repitas nos nomes de suas variáveis.
+Se o nome de sua classe/objeto já lhe diz alguma coisa, não as repita nos nomes de suas variáveis.
 
 **Ruim:**
 ```javascript
