@@ -453,7 +453,7 @@ createMenu(menuConfig);
 
 
 ### Não use flags como parâmetros de funções
-Flags falam para o seu usuário que sua função faz mais de uma coisa. Funções devem fazer apenas uma coisa. Divida suas funções se elas estao seguindo caminhos de código diferentes baseadas em um valor boleano.
+Flags falam para o seu usuário que sua função faz mais de uma coisa. Funções devem fazer apenas uma coisa. Divida suas funções se elas estão seguindo caminhos de código diferentes baseadas em um valor boleano.
 
 **Ruim:**
 ```javascript
