@@ -22,7 +22,7 @@ Princípios da Engenharia de Software, do livro de Robert C. Martin
 [*Código Limpo*](https://www.amazon.com.br/C%C3%B3digo-Limpo-Habilidades-Pr%C3%A1ticas-Software/dp/8576082675),
 adaptados para JavaScript. Isto não é um guia de estilos. É um guia para se produzir código legível, reutilizável e refatorável em JavaScript.
 
-Nem todo princípio demonstrado deve ser seguido rigorosamente, e ainda menos são os que possuem consenso universal. São orientações e nada mais, entretanto, foram usadas em código durante muitos anos de experiencia coletiva pelos autores de *Código limpo*.
+Nem todo princípio demonstrado deve ser seguido rigorosamente, e ainda menos são os que possuem consenso universal. São orientações e nada mais, entretanto, foram usadas em código durante muitos anos de experiência coletiva pelos autores de *Código limpo*.
 
 Nosso ofício de engenharia de software tem pouco mais de 50 anos e ainda estamos aprendendo muito. Quando a arquitetura de software for tão velha quando a própria arquitetura, talvez então tenhamos regras mais rígidas para seguir. Por enquanto, deixe que estas orientações sirvam como critério para se avaliar a qualidade de código JavaScript que tanto você e o seu time produzirem.
 
@@ -106,7 +106,7 @@ locations.forEach((l) => {
   // ...
   // ...
   // ...
-  // Espera, para ques serve o `l` mesmo?
+  // Espera, para que serve o `l` mesmo?
   dispatch(l);
 });
 ```
@@ -126,7 +126,7 @@ locations.forEach((location) => {
 **[⬆ voltar ao topo](#Índice)**
 
 ### Não adicione contextos desnecessários
-Se o nome de sua classe/objeto já lhe diz alguma coisa, não as repitas nos nomes de suas variáveis.
+Se o nome de sua classe/objeto já lhe diz alguma coisa, não as repita nos nomes de suas variáveis.
 
 **Ruim:**
 ```javascript
@@ -157,7 +157,7 @@ function paintCar(car) {
 
 ### Use argumentos padrões ao invés de curto circuitar ou usar condicionais
 
-Argumento padrões são geralmente mais limpos do que curto circuitos. Esteja ciente que se você usá-los, sua função apenas irá fornecer valores padrões para argumentos `undefined`. Outros valores "falsos" como `''`, `""`, `false`, `null`, `0`, e `NaN`, não serão substituidos por valores padrões.
+Argumentos padrões são geralmente mais limpos do que curto circuitos. Esteja ciente que se você usá-los, sua função apenas irá fornecer valores padrões para argumentos `undefined`. Outros valores "falsos" como `''`, `""`, `false`, `null`, `0`, e `NaN`, não serão substituidos por valores padrões.
 
 **Ruim:**
 ```javascript
@@ -181,7 +181,7 @@ function createMicrobrewery(breweryName = 'Hipster Brew Co.') {
 ### Argumentos de funções (idealmente 2 ou menos)
 Limitar a quantidade de parâmetros de uma função é incrivelmente importante porque torna mais fácil testá-la. Ter mais que três leva a uma explosão combinatória onde você tem que testar muitos casos diferentes com cada argumento separadamente.
 
-Um ou dois argumentos é o caso ideal, e três devem ser evitados se possível. Qualquer coisa a mais que isso deve ser consolidado. Geralmente, se você tem mais que dois argumentos então sua função esta tentando fazer muitas coisas. Nos casos em que não esta, na maioria das vezes um objeto é suficiente como argumento.
+Um ou dois argumentos é o caso ideal, e três devem ser evitados se possível. Qualquer coisa a mais que isso deve ser consolidada. Geralmente, se você tem mais que dois argumentos então sua função está tentando fazer muitas coisas. Nos casos em que não está, na maioria das vezes um objeto é suficiente como argumento.
 
 Já que JavaScript lhe permite criar objetos instantaneamente, sem ter que escrever muita coisa, você pode usar um objeto se você se pegar precisando usar muitos argumentos.
 
@@ -272,7 +272,7 @@ addMonthToDate(1, date);
 **[⬆ voltar ao topo](#Índice)**
 
 ### Funções devem ter apenas um nível de abstração
-Quando você tem mais de um nível de abstração sua função provavelmente esta fazendo coisas demais. Dividir suas funções leva a reutilização e teste mais fáceis.
+Quando você tem mais de um nível de abstração sua função provavelmente esta fazendo coisas demais. Dividir suas funções leva a reutilização e testes mais fáceis.
 
 **Ruim:**
 ```javascript
@@ -453,7 +453,7 @@ createMenu(menuConfig);
 
 
 ### Não use flags como parâmetros de funções
-Flags falam para o seu usuário que sua função faz mais de uma coisa. Funções devem fazer apenas uma coisa. Divida suas funções se elas estao seguindo caminhos de código diferentes baseadas em um valor boleano.
+Flags falam para o seu usuário que sua função faz mais de uma coisa. Funções devem fazer apenas uma coisa. Divida suas funções se elas estão seguindo caminhos de código diferentes baseadas em um valor boleano.
 
 **Ruim:**
 ```javascript
@@ -519,7 +519,7 @@ Em JavaScript, tipos primitivos são passados por valor e objetos/vetores são p
 
 O usuário clica no botão "Comprar", botão que invoca a função `purchase` que dispara uma série de requisições e manda o vetor `cart` para o servidor. Devido a uma conexão ruim de internet, a função `purchase` precisa fazer novamente a requisição. Agora, imagine que nesse meio tempo o usuário acidentalmente clique no botão `Adicionar ao carrinho` em um produto que ele não queria antes da requisição começar. Se isto acontecer e a requisição for enviada novamente, então a função `purchase` irá enviar acidentalmente o vetor com o novo produto adicionado porque existe uma referência para o vetor `cart` que a função `addItemToCart` modificou adicionando um produto indesejado.
 
-Uma ótima solução seria que a função `addCartToItem` sempre clonasse o vetor `cart`, edita-se-o, e então retornasse seu clone. Isso garante que nenhuma outra função que possua uma referência para o carrinho de compras seja afetada por qualquer mudança feita.
+Uma ótima solução seria que a função `addCartToItem` sempre clonasse o vetor `cart`, editasse-o, e então retornasse seu clone. Isso garante que nenhuma outra função que possua uma referência para o carrinho de compras seja afetada por qualquer mudança feita.
 
 Duas ressalvas desta abordagem:
 
