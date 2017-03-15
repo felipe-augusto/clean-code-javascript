@@ -810,7 +810,7 @@ inventoryTracker('apples', req, 'www.inventory-awesome.io');
 
 ## **Objetos e Estruturas de Dados**
 ### Use getters e setters
-JavaScript não possui interfaces ou tipos, então é muito difícil forçar esse padrão, porque nós não temos palavras-chave como `public` e `private`. Usar getters e setters para acessar dados nos objetos é bem melhor que simplesmente procurar por uma propriedade em um objeto. "Por que?" você deve perguntar. Bem, aqui vai uma lista desorganizada de motivos:
+JavaScript não possui interfaces ou tipos, então é muito difícil forçar esse padrão, porque nós não temos palavras-chave como `public` e `private`. Usar getters e setters para acessar dados nos objetos é bem melhor que simplesmente procurar por uma propriedade em um objeto. "Por quê?", você deve perguntar. Bem, aqui vai uma lista desorganizada de motivos:
 
 * Quando você quer fazer mais além de pegar (get) a propriedade de um objeto, você não tem que procurar e mudar todos os acessores do eu código.
 * Torna mais fácil fazer validação quando estiver dando um `set`.
