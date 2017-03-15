@@ -817,7 +817,7 @@ JavaScript não possui interfaces ou tipos, então é muito difícil forçar ess
 * Encapsula a representação interna
 * Mais fácil de adicionar logs e tratamento de erros quando dando get and set.
 * Herdando esta classe, você pode sobrescrever as funcionalidades padrões.
-* Você pode usar lazy loading nas propriedades de seu objeto, digamos por exemplo pegando ele de um servidor.
+* Você pode usar lazy loading nas propriedades de seu objeto, digamos, por exemplo, pegando ele de um servidor.
 
 
 **Ruim:**
