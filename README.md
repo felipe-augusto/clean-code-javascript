@@ -812,11 +812,11 @@ inventoryTracker('apples', req, 'www.inventory-awesome.io');
 ### Use getters e setters
 JavaScript não possui interfaces ou tipos, então é muito difícil forçar esse padrão, porque nós não temos palavras-chave como `public` e `private`. Usar getters e setters para acessar dados nos objetos é bem melhor que simplesmente procurar por uma propriedade em um objeto. "Por quê?", você deve perguntar. Bem, aqui vai uma lista desorganizada de motivos:
 
-* Quando você quer fazer mais além de pegar (get) a propriedade de um objeto, você não tem que procurar e mudar todos os acessores do seu código.
-* Torna mais fácil fazer validação quando estiver dando um `set`.
-* Encapsula a representação interna
-* Mais fácil de adicionar logs e tratamento de erros quando dando get and set.
-* Herdando esta classe, você pode sobrescrever as funcionalidades padrões.
+* Quando você quer fazer mais além de pegar (get) a propriedade de um objeto, você não tem que procurar e mudar todos os acessores do seu código;
+* Torna mais fácil fazer validação quando estiver dando um `set`;
+* Encapsula a representação interna;
+* Mais fácil de adicionar logs e tratamento de erros quando dando get and set;
+* Herdando esta classe, você pode sobrescrever as funcionalidades padrões;
 * Você pode usar lazy loading nas propriedades de seu objeto, digamos, por exemplo, pegando ele de um servidor.
 
 
