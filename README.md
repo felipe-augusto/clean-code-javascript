@@ -959,7 +959,7 @@ class UserSettings {
 **[⬆ voltar ao topo](#Índice)**
 
 ### Princípio do Aberto/Fechado (OCP)
-Como foi dito por Bertrand Meyer, "entidades de software (classes, módulos, funções, etc.) devem se manter abertas para extensões, mas fechadas para modificações." Mas o que isso significa? Esse princípio basicamente diz que você deve permitir que usuários adicionem novas funcionalidades sem mudar códigó já existente.
+Como foi dito por Bertrand Meyer, "entidades de software (classes, módulos, funções, etc.) devem se manter abertas para extensões, mas fechadas para modificações." Mas o que isso significa? Esse princípio basicamente diz que você deve permitir que usuários adicionem novas funcionalidades sem mudar código já existente.
 
 **Ruim:**
 ```javascript
