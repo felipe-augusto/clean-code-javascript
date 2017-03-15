@@ -1657,7 +1657,7 @@ async function getCleanCodeArticle() {
 
 ## **Tratamento de Erros**
 `throw error` é uma coisa boa! Eles significam que o programa identificou
-com sucesso quando algo no deu errado e está permitindo que você saiba parando
+com sucesso quando algo deu errado e está permitindo que você saiba parando
 a execução da função no processo atual, fechando o processo (em Node), e
 notificando você no console com a pilha de processos.
 
