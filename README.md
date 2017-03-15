@@ -909,7 +909,7 @@ console.log(`Employee name: ${employee.getName()}`); // Employee name: John Doe
 
 ## **Classes**
 ### Princípio da Responsabilidade Única (SRP)
-Como dito em Código Limpo, "Nunca deveria haver mais de um motivo para uma classe ter que mudar". É tentador empacotar uma classe em excesso com muitas funcionalidades, como quando você pode levar apenas uma mala em seu voo. O problema com isso é que sua classe não sserá conceitualmente coesa e lhe dará diversos motivos para mudá-la. Minimizar o número de vezes que você precisa mudar uma classe é importante. É importante porque se muitas funcionalidades estão em uma classe e você mudar uma porção dela, pode ser difícil entender como isto afetará outras módulos que dependem dela no seu código.
+Como dito em Código Limpo, "Nunca deveria haver mais de um motivo para uma classe ter que mudar". É tentador empacotar uma classe em excesso com muitas funcionalidades, como quando você pode levar apenas uma mala em seu voo. O problema com isso é que sua classe não será conceitualmente coesa e lhe dará diversos motivos para mudá-la. Minimizar o número de vezes que você precisa mudar uma classe é importante. É importante porque se muitas funcionalidades estão em uma classe e você mudar uma porção dela, pode ser difícil entender como isto afetará outras módulos que dependem dela no seu código.
 
 **Ruim:**
 ```javascript
