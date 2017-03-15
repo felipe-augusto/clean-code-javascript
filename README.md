@@ -523,7 +523,7 @@ Uma ótima solução seria que a função `addCartToItem` sempre clonasse o veto
 
 Duas ressalvas desta abordagem:
 
-  1. Podem haver casos onde você realmente quer mudar o objeto de entrada, mas quando você adota este tipo de programação você vai descobrir que estes casos são bastante raros. A maioria das coisas podem ser refatoradas para não terem efeitos colaterais.
+  1. Podem haver casos onde você realmente quer mudar o objeto de entrada, mas quando você adota este tipo de programação, você vai descobrir que estes casos são bastante raros. A maioria das coisas podem ser refatoradas para não terem efeitos colaterais.
 
   2. Clonar objetos grandes pode ser bastante caro em termos de performance. Com sorte, na prática isso não é um problema, porque existem [ótimas bibliotecas](https://facebook.github.io/immutable-js/) que permitem que este tipo de programação seja rápida e não seja tão intensa no uso de memória quanto seria se você clonasse manualmente objetos e vetores.
 
