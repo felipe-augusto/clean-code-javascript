@@ -8,19 +8,20 @@ Repositório original: [ryanmcdermott/clean-code-javascript](https://github.com/
   3. [Funções](#funções)
   4. [Objetos e Estruturas de Dados](#objetos-e-estruturas-de-dados)
   5. [Classes](#classes)
-  6. [Testes](#testes)
-  7. [Concorrência](#concorrência)
-  8. [Tratamento de Erros](#tratamento-de-erros)
-  9. [Formatação](#formatação)
-  10. [Comentários](#comentários)
-  11. [Traduções](#traduções)
+  6. [SOLID](#solid)
+  7. [Testes](#testes)
+  8. [Concorrência](#concorrência)
+  9. [Tratamento de Erros](#tratamento-de-erros)
+  10. [Formatação](#formatação)
+  11. [Comentários](#comentários)
+  12. [Traduções](#traduções)
 
 ## Introdução
 ![Imagem humorística da estimativa de qualidade do software baseado na contagem de quantos palavrões você gritou enquanto lia o código.](http://www.osnews.com/images/comics/wtfm.jpg)
 
 Princípios da Engenharia de Software, do livro de Robert C. Martin
 [*Código Limpo*](https://www.amazon.com.br/C%C3%B3digo-Limpo-Habilidades-Pr%C3%A1ticas-Software/dp/8576082675),
-adaptados para JavaScript. Isto não é um guia de estilos. É um guia para se produzir código legível, reutilizável e refatorável em JavaScript.
+adaptados para JavaScript. Isto não é um guia de estilos. É um guia para se produzir código [legível, reutilizável e refatorável](https://github.com/ryanmcdermott/3rs-of-software-architecture) em JavaScript.
 
 Nem todo princípio demonstrado deve ser seguido rigorosamente, e ainda menos são os que possuem consenso universal. São orientações e nada mais, entretanto, foram usadas em código durante muitos anos de experiência coletiva pelos autores de *Código limpo*.
 
@@ -185,7 +186,7 @@ Um ou dois argumentos é o caso ideal, e três devem ser evitados se possível. 
 
 Já que JavaScript lhe permite criar objetos instantaneamente, sem ter que escrever muita coisa, você pode usar um objeto se você se pegar precisando usar muitos argumentos.
 
-Para tornar mais óbvio quais as propriedades que as funções esperam, você pode usar a sintaxe de desestruturação (destructuring) do ES6. Ela possui algumas vantagens:
+Para tornar mais óbvio quais as propriedades que as funções esperam, você pode usar a sintaxe de desestruturação (destructuring) do ES2015/ES6. Ela possui algumas vantagens:
 
 
 1. Quando alguém olha para a assinatura de uma função, fica imediatamente claro quais propriedades são usadas.
@@ -233,13 +234,13 @@ function emailClients(clients) {
 
 **Bom:**
 ```javascript
-function emailClients(clients) {
+function emailActiveClients(clients) {
   clients
-    .filter(isClientActive)
+    .filter(isActiveClient)
     .forEach(email);
 }
 
-function isClientActive(client) {
+function isActiveClient(client) {
   const clientRecord = database.lookup(client);
   return clientRecord.isActive();
 }
@@ -387,17 +388,19 @@ function showEmployeeList(employees) {
     const expectedSalary = employee.calculateExpectedSalary();
     const experience = employee.getExperience();
 
-    let portfolio = employee.getGithubLink();
-
-    if (employee.type === 'manager') {
-      portfolio = employee.getMBAProjects();
-    }
-
     const data = {
       expectedSalary,
-      experience,
-      portfolio
+      experience
     };
+
+    switch(employee.type){
+      case 'manager':
+        data.portfolio = employee.getMBAProjects();
+        break;
+      case 'developer':
+        data.githubLink = employee.getGithubLink();
+        break;
+    }
 
     render(data);
   });
@@ -420,7 +423,7 @@ function createMenu(config) {
   config.title = config.title || 'Foo';
   config.body = config.body || 'Bar';
   config.buttonText = config.buttonText || 'Baz';
-  config.cancellable = config.cancellable === undefined ? config.cancellable : true;
+  config.cancellable = config.cancellable !== undefined ? config.cancellable : true;
 }
 
 createMenu(menuConfig);
@@ -515,7 +518,7 @@ console.log(newName); // ['Ryan', 'McDermott'];
 **[⬆ voltar ao topo](#Índice)**
 
 ### Evite Efeitos Colaterais (parte 2)
-Em JavaScript, tipos primitivos são passados por valor e objetos/vetores são passados por referência. No caso de objetos e vetores, se nossa função faz uma mudança em um vetor de um carrinho de compras, por exemplo, adicionando um item para ser comprado, então qualquer outra função que use o vetor `cart` também será afetada por essa adição. Isso pode ser ótimo, mas também pode ser ruim. Vamos imaginar uma situação ruim:
+Em JavaScript, tipos primitivos são passados por valor e objetos/vetores são passados por referência. No caso de objetos e vetores, se sua função faz uma mudança em um vetor de um carrinho de compras, por exemplo, adicionando um item para ser comprado, então qualquer outra função que use o vetor `cart` também será afetada por essa adição. Isso pode ser ótimo, mas também pode ser ruim. Vamos imaginar uma situação ruim:
 
 O usuário clica no botão "Comprar", botão que invoca a função `purchase` que dispara uma série de requisições e manda o vetor `cart` para o servidor. Devido a uma conexão ruim de internet, a função `purchase` precisa fazer novamente a requisição. Agora, imagine que nesse meio tempo o usuário acidentalmente clique no botão `Adicionar ao carrinho` em um produto que ele não queria antes da requisição começar. Se isto acontecer e a requisição for enviada novamente, então a função `purchase` irá enviar acidentalmente o vetor com o novo produto adicionado porque existe uma referência para o vetor `cart` que a função `addItemToCart` modificou adicionando um produto indesejado.
 
@@ -538,7 +541,7 @@ const addItemToCart = (cart, item) => {
 **Bom:**
 ```javascript
 const addItemToCart = (cart, item) => {
-  return [...cart, { item, date : Date.now() }];
+  return [...cart, { item, date: Date.now() }];
 };
 ```
 
@@ -736,7 +739,7 @@ function travelToTexas(vehicle) {
 **[⬆ voltar ao topo](#Índice)**
 
 ### Evite checagem de tipos (parte 2)
-Se você estiver trabalhando com valores primitivos básicos como strings, inteiros e vetores, e você não pode usar polimorfismo, mas ainda sente a necessidade de checar o tipo, você deveria considerar usar TypeScript. É uma excelente alternativa para o JavaScript normal, já que fornece uma tipagem estática sobre a sintaxe  padrão do JavaScript. O problema com checagem manual em JavaScript é que para se fazer bem feito requer tanta verborragia extra que a falsa “tipagem-segura” que você consegue não compensa pela perca de legibilidade. Mantenha seu JavaScript limpo, escreve bons testes, e tenha boas revisões de código. Ou, de outra forma, faça tudo isso mas com TypeScript (que, como eu falei, é uma ótima alternativa!).
+Se você estiver trabalhando com valores primitivos básicos como strings e inteiros, e você não pode usar polimorfismo, mas ainda sente a necessidade de checar o tipo, você deveria considerar usar TypeScript. É uma excelente alternativa para o JavaScript normal, já que fornece uma tipagem estática sobre a sintaxe  padrão do JavaScript. O problema com checagem manual em JavaScript é que para se fazer bem feito requer tanta verborragia extra que a falsa “tipagem-segura” que você consegue não compensa pela perca de legibilidade. Mantenha seu JavaScript limpo, escreve bons testes, e tenha boas revisões de código. Ou, de outra forma, faça tudo isso mas com TypeScript (que, como eu falei, é uma ótima alternativa!).
 
 **Ruim:**
 ```javascript
@@ -810,60 +813,56 @@ inventoryTracker('apples', req, 'www.inventory-awesome.io');
 
 ## **Objetos e Estruturas de Dados**
 ### Use getters e setters
-JavaScript não possui interfaces ou tipos, então é muito difícil forçar esse padrão, porque nós não temos palavras-chave como `public` e `private`. Usar getters e setters para acessar dados nos objetos é bem melhor que simplesmente procurar por uma propriedade em um objeto. "Por quê?", você deve perguntar. Bem, aqui vai uma lista desorganizada de motivos:
+Usar getters e setters para acessar dados em objetos é bem melhor que simplesmente procurar por uma propriedade em um objeto. "Por quê?", você deve perguntar. Bem, aqui vai uma lista desorganizada de motivos:
 
 * Quando você quer fazer mais além de pegar (get) a propriedade de um objeto, você não tem que procurar e mudar todos os acessores do seu código;
 * Torna mais fácil fazer validação quando estiver dando um `set`;
 * Encapsula a representação interna;
 * Mais fácil de adicionar logs e tratamento de erros quando dando get and set;
-* Herdando esta classe, você pode sobrescrever as funcionalidades padrões;
 * Você pode usar lazy loading nas propriedades de seu objeto, digamos, por exemplo, pegando ele de um servidor.
 
 
 **Ruim:**
 ```javascript
-class BankAccount {
-  constructor() {
-    this.balance = 1000;
-  }
+function makeBankAccount() {
+  // ...
+
+  return {
+    balance: 0,
+    // ...
+  };
 }
 
-const bankAccount = new BankAccount();
-
-// Buy shoes...
-bankAccount.balance -= 100;
+const account = makeBankAccount();
+account.balance = 100;
 ```
 
 **Bom:**
 ```javascript
-class BankAccount {
-  constructor(balance = 1000) {
-    this._balance = balance;
+function makeBankAccount() {
+  // este é privado
+  let balance = 0;
+
+  // um "getter", feito público através do objeto retornado abaixo
+  function getBalance() {
+    return balance;
   }
 
-  // Não precisa ter como prefixo `get` ou `set` para ser um getter/setter
-  set balance(amount) {
-    if (this.verifyIfAmountCanBeSetted(amount)) {
-      this._balance = amount;
-    }
+  // um "setter", feito público através do objeto retornado abaixo
+  function setBalance(amount) {
+    // ... validate before updating the balance
+    balance = amount;
   }
 
-  get balance() {
-    return this._balance;
-  }
-
-  verifyIfAmountCanBeSetted(val) {
+  return {
     // ...
-  }
+    getBalance,
+    setBalance,
+  };
 }
 
-const bankAccount = new BankAccount();
-
-// Comprar sapatos...
-bankAccount.balance -= shoesPrice;
-
-// Get o balanço
-let balance = bankAccount.balance;
+const account = makeBankAccount();
+account.setBalance(100);
 
 ```
 **[⬆ voltar ao topo](#Índice)**
@@ -908,6 +907,211 @@ console.log(`Employee name: ${employee.getName()}`); // Employee name: John Doe
 
 
 ## **Classes**
+### Prefira classes do ES2015/ES6 ao invés de funções simples do ES5
+É muito difícil conseguir que herança de classe, construtores, e definições de métodos sejam legíveis para classes de ES5 clássicas. Se você precisa de herança (e esteja ciente que você talvez não precise), então prefira classes ES2015/ES6. Entretanto, prefira funções pequenas ao invés de classes até que você precise de objetos maiores e mais complexos.
+
+**Ruim:**
+```javascript
+const Animal = function(age) {
+  if (!(this instanceof Animal)) {
+    throw new Error('Instantiate Animal with `new`');
+  }
+
+  this.age = age;
+};
+
+Animal.prototype.move = function move() {};
+
+const Mammal = function(age, furColor) {
+  if (!(this instanceof Mammal)) {
+    throw new Error('Instantiate Mammal with `new`');
+  }
+
+  Animal.call(this, age);
+  this.furColor = furColor;
+};
+
+Mammal.prototype = Object.create(Animal.prototype);
+Mammal.prototype.constructor = Mammal;
+Mammal.prototype.liveBirth = function liveBirth() {};
+
+const Human = function(age, furColor, languageSpoken) {
+  if (!(this instanceof Human)) {
+    throw new Error('Instantiate Human with `new`');
+  }
+
+  Mammal.call(this, age, furColor);
+  this.languageSpoken = languageSpoken;
+};
+
+Human.prototype = Object.create(Mammal.prototype);
+Human.prototype.constructor = Human;
+Human.prototype.speak = function speak() {};
+```
+
+**Bom:**
+```javascript
+class Animal {
+  constructor(age) {
+    this.age = age;
+  }
+
+  move() { /* ... */ }
+}
+
+class Mammal extends Animal {
+  constructor(age, furColor) {
+    super(age);
+    this.furColor = furColor;
+  }
+
+  liveBirth() { /* ... */ }
+}
+
+class Human extends Mammal {
+  constructor(age, furColor, languageSpoken) {
+    super(age, furColor);
+    this.languageSpoken = languageSpoken;
+  }
+
+  speak() { /* ... */ }
+}
+```
+**[⬆ voltar ao topo](#Índice)**
+
+
+### Use encadeamento de métodos
+Este padrão é muito útil em JavaScript e você o verá em muitas bibliotecas como jQuery e Lodash. Ele permite que seu código seja expressivo e menos verboso. Por esse motivo, eu digo, use encadeamento de métodos e dê uma olhada em como o seu código ficará mais limpo. Em suas funções de classes, apenas retorne `this` no final de cada função, e você poderá encadear mais métodos de classe nele.
+
+**Ruim:**
+```javascript
+class Car {
+  constructor(make, model, color) {
+    this.make = make;
+    this.model = model;
+    this.color = color;
+  }
+
+  setMake(make) {
+    this.make = make;
+  }
+
+  setModel(model) {
+    this.model = model;
+  }
+
+  setColor(color) {
+    this.color = color;
+  }
+
+  save() {
+    console.log(this.make, this.model, this.color);
+  }
+}
+
+const car = new Car('Ford','F-150','red');
+car.setColor('pink');
+car.save();
+```
+
+**Bom:**
+```javascript
+class Car {
+  constructor(make, model, color) {
+    this.make = make;
+    this.model = model;
+    this.color = color;
+  }
+
+  setMake(make) {
+    this.make = make;
+    // NOTA: Retorne this para encadear
+    return this;
+  }
+
+  setModel(model) {
+    this.model = model;
+    // NOTA: Retorne this para encadear
+    return this;
+  }
+
+  setColor(color) {
+    this.color = color;
+    // NOTA: Retorne this para encadear
+    return this;
+  }
+
+  save() {
+    console.log(this.make, this.model, this.color);
+    // NOTA: Retorne this para encadear
+    return this;
+  }
+}
+
+const car = new Car('Ford','F-150','red')
+  .setColor('pink')
+  .save();
+```
+**[⬆ voltar ao topo](#Índice)**
+
+### Prefira composição ao invés de herança
+Como dito famosamente em [*Padrão de projeto*](https://pt.wikipedia.org/wiki/Padr%C3%A3o_de_projeto_de_software) pela Gangue dos Quatro, você deve preferir composição sobre herança onde você puder. Existem muitas boas razões para usar herança e muitas boas razões para se usar composição. O ponto principal para essa máxima é que se sua mente for instintivamente para a herança, tente pensar se composição poderia modelar melhor o seu problema. Em alguns casos pode.
+
+Você deve estar pensando então, "quando eu deveria usar herança?" Isso depende especificamente do seu problema, mas essa é uma lista decente de quando herança faz mais sentido que composição:
+
+1. Sua herança representa uma relação de "isto-é" e não uma relação de "isto-tem" (Human→Animal vs. User->UserDetails)
+2. Você pode reutilizar código de classes de base (Humanos podem se mover como todos os animais).
+3. Você quer fazer mudanças globais para classes derivadas mudando apenas a classe base. (Mudar o custo calórico para todos os animais quando se movem).
+
+**Ruim:**
+```javascript
+class Employee {
+  constructor(name, email) {
+    this.name = name;
+    this.email = email;
+  }
+
+  // ...
+}
+
+// Ruim porque Employees (Empregados) "tem" dados de impostos. EmployeeTaxData não é um tipo de Employee
+class EmployeeTaxData extends Employee {
+  constructor(ssn, salary) {
+    super();
+    this.ssn = ssn;
+    this.salary = salary;
+  }
+
+  // ...
+}
+```
+
+**Bom:**
+```javascript
+class EmployeeTaxData {
+  constructor(ssn, salary) {
+    this.ssn = ssn;
+    this.salary = salary;
+  }
+
+  // ...
+}
+
+class Employee {
+  constructor(name, email) {
+    this.name = name;
+    this.email = email;
+  }
+
+  setTaxData(ssn, salary) {
+    this.taxData = new EmployeeTaxData(ssn, salary);
+  }
+  // ...
+}
+```
+**[⬆ voltar ao topo](#Índice)**
+
+## **SOLID**
 ### Princípio da Responsabilidade Única (SRP)
 Como dito em Código Limpo, "Nunca deveria haver mais de um motivo para uma classe ter que mudar". É tentador empacotar uma classe em excesso com muitas funcionalidades, como quando você pode levar apenas uma mala em seu voo. O problema com isso é que sua classe não será conceitualmente coesa e dar-lhe-á diversos motivos para mudá-la. Minimizar o número de vezes que você precisa mudar uma classe é importante, porque, se muitas funcionalidades estão em uma classe e você mudar uma porção dela, pode ser difícil entender como isto afetará outras módulos que dependem dela no seu código.
 
@@ -1093,7 +1297,7 @@ function renderLargeRectangles(rectangles) {
   rectangles.forEach((rectangle) => {
     rectangle.setWidth(4);
     rectangle.setHeight(5);
-    const area = rectangle.getArea(); // RUIM: Retornará 25 para o Quadrado. Deveria ser 20.
+    const area = rectangle.getArea(); // RUIM: Retorna 25 para o Quadrado. Deveria ser 20.
     rectangle.render(area);
   });
 }
@@ -1115,17 +1319,9 @@ class Shape {
 }
 
 class Rectangle extends Shape {
-  constructor() {
+  constructor(width, height) {
     super();
-    this.width = 0;
-    this.height = 0;
-  }
-
-  setWidth(width) {
     this.width = width;
-  }
-
-  setHeight(height) {
     this.height = height;
   }
 
@@ -1135,12 +1331,8 @@ class Rectangle extends Shape {
 }
 
 class Square extends Shape {
-  constructor() {
+  constructor(length) {
     super();
-    this.length = 0;
-  }
-
-  setLength(length) {
     this.length = length;
   }
 
@@ -1151,21 +1343,12 @@ class Square extends Shape {
 
 function renderLargeShapes(shapes) {
   shapes.forEach((shape) => {
-    switch (shape.constructor.name) {
-      case 'Square':
-        shape.setLength(5);
-        break;
-      case 'Rectangle':
-        shape.setWidth(4);
-        shape.setHeight(5);
-    }
-
     const area = shape.getArea();
     shape.render(area);
   });
 }
 
-const shapes = [new Rectangle(), new Rectangle(), new Square()];
+const shapes = [new Rectangle(4, 5), new Rectangle(4, 5), new Square(5)];
 renderLargeShapes(shapes);
 ```
 **[⬆ voltar ao topo](#Índice)**
@@ -1242,7 +1425,7 @@ Este princípio nos diz duas coisas essenciais:
 1. Módulos de alto nível não devem depender de módulos de baixo nível. Ambos devem depender de abstrações.
 2. Abstrações não devem depender de detalhes. Detalhes devem depender de abstrações.
 
-Isso pode ser difícil de entender a princípio, mas se você já trabalhou com Angular.js, você já viu uma implementação deste princípio na forma de injeção de dependência (DI). Apesar de não serem conceitos idênticos, DIP não deixa módulos de alto nível saber os detalhes de seus módulos de baixo nível, assim como configurá-los. Isso pode ser alcançado através de DI. Um grande beneficio é que reduz o acoplamento entre os módulos. Acoplamento é um padrão de desenvolvimento muito ruim porque torna seu código mais difícil de ser refatorado.
+Isso pode ser difícil de entender a princípio, mas se você já trabalhou com AngularJS, você já viu uma implementação deste princípio na forma de injeção de dependência (DI). Apesar de não serem conceitos idênticos, DIP não deixa módulos de alto nível saber os detalhes de seus módulos de baixo nível, assim como configurá-los. Isso pode ser alcançado através de DI. Um grande beneficio é que reduz o acoplamento entre os módulos. Acoplamento é um padrão de desenvolvimento muito ruim porque torna seu código mais difícil de ser refatorado.
 
 Como dito anteriormente, JavaScript não possui interfaces, então as abstrações que são necessárias são contratos implícitos. Que quer dizer que, os métodos e as classes que um objeto/classe expõe para outros objeto/classe. No exemplo abaixo, o contrato implícito é que qualquer módulo de Request  para `InventoryTracker` terá um método `requestItems`:
 
@@ -1320,214 +1503,6 @@ inventoryTracker.requestItems();
 ```
 **[⬆ voltar ao topo](#Índice)**
 
-### Prefira classes do ES2015/ES6 ao invés de funções simples do ES5
-É muito difícil conseguir que herança de classe, construtores, e definições de métodos sejam legíveis para classes de ES5 clássicas. Se você precisa de herança (e esteja ciente que você talvez não precise), então prefira classes. Entretanto, prefira funções pequenas ao invés de classes até que você precise de objetos maiores e mais complexos.
-
-**Ruim:**
-```javascript
-const Animal = function(age) {
-  if (!(this instanceof Animal)) {
-    throw new Error('Instantiate Animal with `new`');
-  }
-
-  this.age = age;
-};
-
-Animal.prototype.move = function move() {};
-
-const Mammal = function(age, furColor) {
-  if (!(this instanceof Mammal)) {
-    throw new Error('Instantiate Mammal with `new`');
-  }
-
-  Animal.call(this, age);
-  this.furColor = furColor;
-};
-
-Mammal.prototype = Object.create(Animal.prototype);
-Mammal.prototype.constructor = Mammal;
-Mammal.prototype.liveBirth = function liveBirth() {};
-
-const Human = function(age, furColor, languageSpoken) {
-  if (!(this instanceof Human)) {
-    throw new Error('Instantiate Human with `new`');
-  }
-
-  Mammal.call(this, age, furColor);
-  this.languageSpoken = languageSpoken;
-};
-
-Human.prototype = Object.create(Mammal.prototype);
-Human.prototype.constructor = Human;
-Human.prototype.speak = function speak() {};
-```
-
-**Bom:**
-```javascript
-class Animal {
-  constructor(age) {
-    this.age = age;
-  }
-
-  move() { /* ... */ }
-}
-
-class Mammal extends Animal {
-  constructor(age, furColor) {
-    super(age);
-    this.furColor = furColor;
-  }
-
-  liveBirth() { /* ... */ }
-}
-
-class Human extends Mammal {
-  constructor(age, furColor, languageSpoken) {
-    super(age, furColor);
-    this.languageSpoken = languageSpoken;
-  }
-
-  speak() { /* ... */ }
-}
-```
-**[⬆ voltar ao topo](#Índice)**
-
-
-### Use encadeamento de métodos
-Este padrão é muito útil em JavaScript e você o verá em muitas bibliotecas como jQuery e Lodash. Ele permite que seu código seja expressivo e menos verboso. Por esse motivo, eu digo, use encadeamento de métodos e dê uma olhada em como o seu código ficará mais limpo. Em suas funções de classes, apenas retorne `this` no final de cada função, e você poderá encadear mais métodos de classe nele.
-
-**Ruim:**
-```javascript
-class Car {
-  constructor() {
-    this.make = 'Honda';
-    this.model = 'Accord';
-    this.color = 'white';
-  }
-
-  setMake(make) {
-    this.make = make;
-  }
-
-  setModel(model) {
-    this.model = model;
-  }
-
-  setColor(color) {
-    this.color = color;
-  }
-
-  save() {
-    console.log(this.make, this.model, this.color);
-  }
-}
-
-const car = new Car();
-car.setColor('pink');
-car.setMake('Ford');
-car.setModel('F-150');
-car.save();
-```
-
-**Bom:**
-```javascript
-class Car {
-  constructor() {
-    this.make = 'Honda';
-    this.model = 'Accord';
-    this.color = 'white';
-  }
-
-  setMake(make) {
-    this.make = make;
-    // NOTA: Retorne this para encadear
-    return this;
-  }
-
-  setModel(model) {
-    this.model = model;
-    // NOTA: Retorne this para encadear
-    return this;
-  }
-
-  setColor(color) {
-    this.color = color;
-    // NOTA: Retorne this para encadear
-    return this;
-  }
-
-  save() {
-    console.log(this.make, this.model, this.color);
-    // NOTA: Retorne this para encadear
-    return this;
-  }
-}
-
-const car = new Car()
-  .setColor('pink')
-  .setMake('Ford')
-  .setModel('F-150')
-  .save();
-```
-**[⬆ voltar ao topo](#Índice)**
-
-### Prefira composição ao invés de herança
-Como dito famosamente em [*Padrão de projeto*](https://pt.wikipedia.org/wiki/Padr%C3%A3o_de_projeto_de_software) pela Gangue dos Quatro, você deve preferir composição sobre herança onde você puder. Existem muitas boas razões para usar herança e muitas boas razões para se usar composição. O ponto principal para essa máxima é que se sua mente for instintivamente para a herança, tente pensar se composição poderia modelar melhor o seu problema. Em alguns casos pode.
-
-Você deve estar pensando então, "quando eu deveria usar herança?" Isso depende especificamente do seu problema, mas essa é uma lista decente de quando herança faz mais sentido que composição:
-
-1. Sua herança representa uma relação de "isto-é" e não uma relação de "isto-tem" (Human→Animal vs. User->UserDetails)
-2. Você pode reutilizar código de classes de base (Humanos podem se mover como todos os animais).
-3. Você quer fazer mudanças globais para classes derivadas mudando apenas a classe base. (Mudar o custo calórico para todos os animais quando se movem).
-
-**Ruim:**
-```javascript
-class Employee {
-  constructor(name, email) {
-    this.name = name;
-    this.email = email;
-  }
-
-  // ...
-}
-
-// Ruim porque Employees (Empregados) "tem" dados de impostos. EmployeeTaxData não é um tipo de Employee
-class EmployeeTaxData extends Employee {
-  constructor(ssn, salary) {
-    super();
-    this.ssn = ssn;
-    this.salary = salary;
-  }
-
-  // ...
-}
-```
-
-**Bom:**
-```javascript
-class EmployeeTaxData {
-  constructor(ssn, salary) {
-    this.ssn = ssn;
-    this.salary = salary;
-  }
-
-  // ...
-}
-
-class Employee {
-  constructor(name, email) {
-    this.name = name;
-    this.email = email;
-  }
-
-  setTaxData(ssn, salary) {
-    this.taxData = new EmployeeTaxData(ssn, salary);
-  }
-  // ...
-}
-```
-**[⬆ voltar ao topo](#Índice)**
-
 ## **Testes**
 Testes são mais importantes que entregas. Se você não possui testes ou um quantidade inadequada, então toda vez que você entregar seu código você não terá certeza se você não quebrou alguma coisa. Decidir o que constitui uma quantidade adequada é responsabilidade do seu time, mas ter 100% de cobertura (todas as sentenças e branches) é a maneira que se alcança uma alta confiança e uma paz de espirito em desenvolvimento. Isso quer dizer que além de ter um ótimo framework de testes, você também precisa usar uma [boa ferramenta de cobertura](http://gotwarlost.github.io/istanbul/).
 
@@ -1537,7 +1512,7 @@ Não existe desculpa para não escrever testes. Existem [diversos frameworks de 
 
 **Ruim:**
 ```javascript
-const assert = require('assert');
+import assert from 'assert';
 
 describe('MakeMomentJSGreatAgain', () => {
   it('handles date boundaries', () => {
@@ -1560,7 +1535,7 @@ describe('MakeMomentJSGreatAgain', () => {
 
 **Bom:**
 ```javascript
-const assert = require('assert');
+import assert from 'assert';
 
 describe('MakeMomentJSGreatAgain', () => {
   it('handles 30-day months', () => {
@@ -1590,11 +1565,14 @@ Callbacks não são limpos, e eles causam uma quantidade excessiva de aninhament
 
 **Ruim:**
 ```javascript
-require('request').get('https://en.wikipedia.org/wiki/Robert_Cecil_Martin', (requestErr, response) => {
+import { get } from 'request';
+import { writeFile } from 'fs';
+
+get('https://en.wikipedia.org/wiki/Robert_Cecil_Martin', (requestErr, response) => {
   if (requestErr) {
     console.error(requestErr);
   } else {
-    require('fs').writeFile('article.html', response.body, (writeErr) => {
+    writeFile('article.html', response.body, (writeErr) => {
       if (writeErr) {
         console.error(writeErr);
       } else {
@@ -1608,9 +1586,12 @@ require('request').get('https://en.wikipedia.org/wiki/Robert_Cecil_Martin', (req
 
 **Bom:**
 ```javascript
-require('request-promise').get('https://en.wikipedia.org/wiki/Robert_Cecil_Martin')
+import { get } from 'request';
+import { writeFile } from 'fs';
+
+get('https://en.wikipedia.org/wiki/Robert_Cecil_Martin')
   .then((response) => {
-    return require('fs-promise').writeFile('article.html', response);
+    return writeFile('article.html', response);
   })
   .then(() => {
     console.log('File written');
@@ -1627,9 +1608,12 @@ Promessas são uma alternativa bem mais limpa que callbacks, mas o ES2017/ES8 tr
 
 **Ruim:**
 ```javascript
-require('request-promise').get('https://en.wikipedia.org/wiki/Robert_Cecil_Martin')
+import { get } from 'request-promise';
+import { writeFile } from 'fs-promise';
+
+get('https://en.wikipedia.org/wiki/Robert_Cecil_Martin')
   .then((response) => {
-    return require('fs-promise').writeFile('article.html', response);
+    return writeFile('article.html', response);
   })
   .then(() => {
     console.log('File written');
@@ -1642,10 +1626,13 @@ require('request-promise').get('https://en.wikipedia.org/wiki/Robert_Cecil_Marti
 
 **Bom:**
 ```javascript
+import { get } from 'request-promise';
+import { writeFile } from 'fs-promise';
+
 async function getCleanCodeArticle() {
   try {
-    const response = await require('request-promise').get('https://en.wikipedia.org/wiki/Robert_Cecil_Martin');
-    await require('fs-promise').writeFile('article.html', response);
+    const response = await get('https://en.wikipedia.org/wiki/Robert_Cecil_Martin');
+    await writeFile('article.html', response);
     console.log('File written');
   } catch(err) {
     console.error(err);
@@ -1700,29 +1687,30 @@ caputados de `try/catch`
 **Ruim:**
 ```javascript
 getdata()
-.then((data) => {
-  functionThatMightThrow(data);
-})
-.catch((error) => {
-  console.log(error);
-});
+  .then((data) => {
+    functionThatMightThrow(data);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
 ```
 
 **Bom:**
 ```javascript
 getdata()
-.then((data) => {
-  functionThatMightThrow(data);
-})
-.catch((error) => {
-  // Uma opção (mais chamativa que console.log):
-  console.error(error);
-  // Outra opção:
-  notifyUserOfError(error);
-  // Outra opção:
-  reportErrorToService(error);
-  // OU as três!
-});
+  .then((data) => {
+    functionThatMightThrow(data);
+  })
+  .catch((error) => {
+    // One option (more noisy than console.log):
+    console.error(error);
+    // Another option:
+    notifyUserOfError(error);
+    // Another option:
+    reportErrorToService(error);
+    // OR do all three!
+  });
+
 ```
 
 **[⬆ voltar ao topo](#Índice)**
@@ -1764,8 +1752,8 @@ class Alpaca {}
 const DAYS_IN_WEEK = 7;
 const DAYS_IN_MONTH = 30;
 
-const songs = ['Back In Black', 'Stairway to Heaven', 'Hey Jude'];
-const artists = ['ACDC', 'Led Zeppelin', 'The Beatles'];
+const SONGS = ['Back In Black', 'Stairway to Heaven', 'Hey Jude'];
+const ARTISTS = ['ACDC', 'Led Zeppelin', 'The Beatles'];
 
 function eraseDatabase() {}
 function restoreDatabase() {}
@@ -1817,7 +1805,7 @@ class PerformanceReview {
   }
 }
 
-const review = new PerformanceReview(user);
+const review = new PerformanceReview(employee);
 review.perfReview();
 ```
 
@@ -1988,7 +1976,17 @@ const actions = function() {
 
 Existem traduções disponíveis em outras linguas:
 
-  - ![de](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Germany.png) **Alemão**: [marcbruederlin/clean-code-javascript](https://github.com/marcbruederlin/clean-code-javascript)
-  - ![cn](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/China.png) **Chinês**: [alivebao/clean-code-js](https://github.com/alivebao/clean-code-js)
-  - ![kr](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/South-Korea.png) **Coreano**: [qkraudghgh/clean-code-javascript-ko](https://github.com/qkraudghgh/clean-code-javascript-ko)
-  - ![ru](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Russia.png) **Russo**: [BoryaMogila/clean-code-javascript-ru/](https://github.com/BoryaMogila/clean-code-javascript-ru/)
+  - ![es](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Uruguay.png) **Spanish**: [andersontr15/clean-code-javascript](https://github.com/andersontr15/clean-code-javascript-es)
+  - ![cn](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/China.png) **Chinese**:
+    - [alivebao/clean-code-js](https://github.com/alivebao/clean-code-js)
+    - [beginor/clean-code-javascript](https://github.com/beginor/clean-code-javascript)
+  - ![de](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Germany.png) **German**: [marcbruederlin/clean-code-javascript](https://github.com/marcbruederlin/clean-code-javascript)
+  - ![kr](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/South-Korea.png) **Korean**: [qkraudghgh/clean-code-javascript-ko](https://github.com/qkraudghgh/clean-code-javascript-ko)
+  - ![pl](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Poland.png) **Polish**: [greg-dev/clean-code-javascript-pl](https://github.com/greg-dev/clean-code-javascript-pl)
+  - ![ru](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Russia.png) **Russian**:
+    - [BoryaMogila/clean-code-javascript-ru/](https://github.com/BoryaMogila/clean-code-javascript-ru/)
+    - [maksugr/clean-code-javascript](https://github.com/maksugr/clean-code-javascript)
+  - ![vi](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Vietnam.png) **Vietnamese**: [hienvd/clean-code-javascript/](https://github.com/hienvd/clean-code-javascript/)
+  - ![ja](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Japan.png) **Japanese**: [mitsuruog/clean-code-javascript/](https://github.com/mitsuruog/clean-code-javascript/)
+  - ![id](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Indonesia.png) **Indonesia**:
+  [andirkh/clean-code-javascript/](https://github.com/andirkh/clean-code-javascript/)
