@@ -1852,7 +1852,7 @@ review.perfReview();
 
 ## **Comentários**
 ### Apenas comente coisas que tenham complexidade de lógica de negócio.
-Comentários são uma apologia, não um requisito. Um bom código documenta-se, *a maior parte*, por si só.
+Comentários são uma desculpa, não um requisito. Um bom código documenta-se, *a maior parte*, por si só.
 
 **Ruim:**
 ```javascript
