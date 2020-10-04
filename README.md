@@ -151,7 +151,9 @@ const Car = {
 };
 
 function paintCar(car) {
-  car.color = 'Red';
+  let clonedCar = {...car};
+  clonedCar.color = 'Red';
+  return clonedCar;
 }
 ```
 **[⬆ voltar ao topo](#Índice)**
@@ -1944,7 +1946,7 @@ com a devida identação e formatação deem a estrutura visual para o seu códi
 **Ruim:**
 ```javascript
 ////////////////////////////////////////////////////////////////////////////////
-// Intanciação do Scope Model
+// Instanciação do Scope Model
 ////////////////////////////////////////////////////////////////////////////////
 $scope.model = {
   menu: 'foo',
