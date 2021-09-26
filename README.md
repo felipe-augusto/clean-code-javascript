@@ -438,15 +438,15 @@ const menuConfig = {
   cancellable: true
 };
 
-function createMenu(config) {
-  config = Object.assign({
+function createMenu(config = {}) {
+  const menu = Object.assign({
     title: 'Foo',
     body: 'Bar',
     buttonText: 'Baz',
     cancellable: true
   }, config);
 
-  // configuração agora é: {title: "Order", body: "Bar", buttonText: "Send", cancellable: true}
+  // O menu será: {title: "Order", body: "Bar", buttonText: "Send", cancellable: true}
   // ...
 }
 
