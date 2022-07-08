@@ -71,9 +71,9 @@ setTimeout(blastOff, 86400000);
 **Bom:**
 ```javascript
 // Declare-as como `const` global em letras maiúsculas.
-const MILLISECONDS_IN_A_DAY = 86400000;
+const MILLISECONDS_PER_DAY = 86400000;
 
-setTimeout(blastOff, MILLISECONDS_IN_A_DAY);
+setTimeout(blastOff, MILLISECONDS_PER_DAY);
 
 ```
 **[⬆ voltar ao topo](#Índice)**
@@ -137,8 +137,8 @@ const Car = {
   carColor: 'Blue'
 };
 
-function paintCar(car) {
-  car.carColor = 'Red';
+function paintCar(car, color) {
+  car.carColor = color;
 }
 ```
 
@@ -150,8 +150,8 @@ const Car = {
   color: 'Blue'
 };
 
-function paintCar(car) {
-  car.color = 'Red';
+function paintCar(car, color) {
+  car.color = color;
 }
 ```
 **[⬆ voltar ao topo](#Índice)**
