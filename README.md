@@ -1425,7 +1425,7 @@ Este princípio nos diz duas coisas essenciais:
 1. Módulos de alto nível não devem depender de módulos de baixo nível. Ambos devem depender de abstrações.
 2. Abstrações não devem depender de detalhes. Detalhes devem depender de abstrações.
 
-Isso pode ser difícil de entender a princípio, mas se você já trabalhou com AngularJS, você já viu uma implementação deste princípio na forma de injeção de dependência (DI). Apesar de não serem conceitos idênticos, DIP não deixa módulos de alto nível saber os detalhes de seus módulos de baixo nível, assim como configurá-los. Isso pode ser alcançado através de DI. Um grande beneficio é que reduz o acoplamento entre os módulos. Acoplamento é um padrão de desenvolvimento muito ruim porque torna seu código mais difícil de ser refatorado.
+Isso pode ser difícil de entender a princípio, mas se você já trabalhou com AngularJS, você já viu uma implementação deste princípio na forma de injeção de dependência (DI). Apesar de não serem conceitos idênticos, DIP não deixa módulos de alto nível saber os detalhes de seus módulos de baixo nível, assim como configurá-los. Isso pode ser alcançado através de DI. Um grande benefício é que reduz o acoplamento entre os módulos. Acoplamento é um padrão de desenvolvimento muito ruim porque torna seu código mais difícil de ser refatorado.
 
 Como dito anteriormente, JavaScript não possui interfaces, então as abstrações que são necessárias são contratos implícitos. Que quer dizer que, os métodos e as classes que um objeto/classe expõe para outros objeto/classe. No exemplo abaixo, o contrato implícito é que qualquer módulo de Request  para `InventoryTracker` terá um método `requestItems`:
 
