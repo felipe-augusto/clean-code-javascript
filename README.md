@@ -158,7 +158,7 @@ function paintCar(car, color) {
 
 ### Use argumentos padrões ao invés de curto circuitar ou usar condicionais
 
-Argumentos padrões são geralmente mais limpos do que curto circuitos. Esteja ciente que se você usá-los, sua função apenas irá fornecer valores padrões para argumentos `undefined`. Outros valores "falsos" como `''`, `""`, `false`, `null`, `0`, e `NaN`, não serão substituidos por valores padrões.
+Argumentos padrões são geralmente mais limpos do que curto circuitos. Esteja ciente que se você usá-los, sua função apenas irá fornecer valores padrões para argumentos `undefined`. Outros valores "falsos" como `''`, `""`, `false`, `null`, `0`, e `NaN`, não serão substituídos por valores padrões.
 
 **Ruim:**
 ```javascript
