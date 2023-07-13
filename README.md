@@ -1913,7 +1913,7 @@ doStuff();
 
 ### Não comente registro de alterações
 Lembre-se, utilize controle de versão! Não tem necessidade em deixar códigos
-inutlizados, códigos comentados e especialmente registros de alterações.
+inutilizados, códigos comentados e especialmente registros de alterações.
 Utilize `git log` para pegar o histórico!
 
 **Ruim:**
