@@ -1682,7 +1682,7 @@ try {
 
 ### Não ignore promessas rejeitadas
 Pela mesma razão que você não deveria ignorar erros
-caputados de `try/catch`
+captados de `try/catch`
 
 **Ruim:**
 ```javascript
