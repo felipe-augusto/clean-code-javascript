@@ -1720,7 +1720,7 @@ getdata()
 Formatação é subjetiva. Como muitas regras aqui, não há nenhuma regra fixa e
 rápida que você precisa seguir. O ponto principal é NÃO DISCUTA sobre formatação.
 Existem [muitas ferramentas](http://standardjs.com/rules.html) para automatizar isso.
-Utilize uma! É um desperdicio de tempo e dinheiro para engenheiros discutirem sobre
+Utilize uma! É um desperdício de tempo e dinheiro para engenheiros discutirem sobre
 formatação.
 
 Para coisas que não possam utilizar formatação automática (identação, tabs vs. espaços,
