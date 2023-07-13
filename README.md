@@ -1604,7 +1604,7 @@ get('https://en.wikipedia.org/wiki/Robert_Cecil_Martin')
 **[⬆ voltar ao topo](#Índice)**
 
 ### Async/Await são ainda mais limpas que Promessas
-Promessas são uma alternativa bem mais limpa que callbacks, mas o ES2017/ES8 traz `async` e `await` que oferecem uma solução ainda mais limpa. Tudo o que você precisa é uma função que tem como prefixo a palavra-chave `async`, e então você pode escrever sua logica imperativamente sem usar `then` para encadear suas funções. Use isto se você puder tirar vantagem das funcionalidades do  ES2017/ES8 hoje!
+Promessas são uma alternativa bem mais limpa que callbacks, mas o ES2017/ES8 traz `async` e `await` que oferecem uma solução ainda mais limpa. Tudo o que você precisa é uma função que tem como prefixo a palavra-chave `async`, e então você pode escrever sua lógica imperativamente sem usar `then` para encadear suas funções. Use isto se você puder tirar vantagem das funcionalidades do  ES2017/ES8 hoje!
 
 **Ruim:**
 ```javascript
