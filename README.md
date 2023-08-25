@@ -451,6 +451,38 @@ function createMenu(config) {
 }
 
 createMenu(menuConfig);
+
+
+// Ou usar o conceito de desestruturação vindo no ES6
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
+
+const DEFAULT_CONFIG_MENU = {
+  title: 'Foo',
+  body: 'Bar',
+  buttonText: 'Baz',
+  cancellable: true
+}
+
+const menuConfig = {
+  title: 'Order',
+  // Usuário não incluiu a chave 'body'
+  buttonText: 'Send',
+  cancellable: true
+};
+
+function createMenu(config) {
+  config = {
+    ...DEFAULT_CONFIG_MENU,
+    ...config
+  };
+
+  // configuração agora é: {title: "Order", body: "Bar", buttonText: "Send", cancellable: true}
+  // ...
+}
+
+createMenu(menuConfig);
+
+
 ```
 **[⬆ voltar ao topo](#Índice)**
 
